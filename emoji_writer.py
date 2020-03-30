@@ -231,7 +231,7 @@ W = [
     '10101',
     '10101',
     '10101',
-    '01010',
+    '11011',
     '10001',
 ]
 
@@ -355,8 +355,8 @@ def write_emoji_word(word, foreground, background, border, border_emoji, emojize
     output_str += l + '\n'
   output_str += '0' * char_length + '\n'
 
-  output_str = output_str.replace('0', f':{background}:')
-  output_str = output_str.replace('1', f':{foreground}:')
+  output_str = output_str.translate(str.maketrans(
+      {'0': f':{background}:', '1': f':{foreground}:'}))
 
   if emojize:
     print(emoji.emojize(output_str))
