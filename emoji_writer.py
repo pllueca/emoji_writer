@@ -295,6 +295,15 @@ PIPE = [
     '010',
 ]
 
+EXCLAMATION_MARK = [
+    '010',
+    '010',
+    '010',
+    '010',
+    '010',
+    '000',
+    '010',
+]
 letters_to_matrix = {
     'a': A,
     'b': B,
@@ -323,6 +332,7 @@ letters_to_matrix = {
     'z': Z,
     ' ': SPACE,
     '|': PIPE,
+    '!': EXCLAMATION_MARK,
 }
 
 
@@ -333,8 +343,9 @@ letters_to_matrix = {
 @click.option(
     '--border/--no-border', default=False, help='If true, draw a border using border-emoji')
 @click.option('--border-emoji', default='fire')
+@click.option('--border-size', type=int, default=1)
 @click.option('--emojize/--no-emojize', default=True)
-def write_emoji_word(word, foreground, background, border, border_emoji, emojize):
+def write_emoji_word(word, foreground, background, border, border_emoji, border_size, emojize):
   """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
 
   # leave 1 empty column at the beggining
@@ -349,14 +360,40 @@ def write_emoji_word(word, foreground, background, border, border_emoji, emojize
 
   # merge the lines
   # add 1 empty line at the top and at the bottom
-  char_length = len(output_lines[0])  # all lines should be the same length
-  output_str = '0' * char_length + '\n'
-  for l in output_lines:
-    output_str += l + '\n'
-  output_str += '0' * char_length + '\n'
+  # all lines should be the same length, add border
+  char_length = len(output_lines[0])
+  output_str = ''
 
-  output_str = output_str.translate(str.maketrans(
-      {'0': f':{background}:', '1': f':{foreground}:'}))
+  if border:
+    for _ in range(border_size):
+      output_str += '2' * (char_length + 2 * border_size) + '\n'
+
+  if border:
+    output_str += '2' * border_size + '0' * char_length + '2' * border_size + '\n'
+  else:
+    output_str += '0' * char_length + '\n'
+
+  for l in output_lines:
+    if border:
+      output_str += ('2' * border_size) + l + ('2' * border_size) + '\n'
+    else:
+      output_str += l + '\n'
+
+  if border:
+    output_str += '2' * border_size + '0' * char_length + '2' * border_size + '\n'
+  else:
+    output_str += '0' * char_length + '\n'
+
+  if border:
+    for _ in range(border_size):
+      output_str += '2' * (char_length + 2 * border_size) + '\n'
+
+  output_str = output_str.translate(
+      str.maketrans({
+          '0': f':{background}:',
+          '1': f':{foreground}:',
+          '2': f':{border_emoji}:',
+      }))
 
   if emojize:
     print(emoji.emojize(output_str))
