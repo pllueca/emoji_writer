@@ -1,6 +1,7 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
+import random
 
 import emoji
 import click
@@ -336,17 +337,40 @@ letters_to_matrix = {
 }
 
 
+def random_emoji_name() -> str:
+  """ return a random emoji. remove the leading and training :"""
+  return random.choice(list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys()))[1:-1]
+
+
 @click.command()
 @click.option('--word', help='word to write', required=True)
 @click.option('--foreground', help='foreground emoji', default='thumbs_up')
+@click.option('--random-foreground', default=False, is_flag=True)
 @click.option('--background', help='background emoji', default='white_large_square')
+@click.option('--random-background', default=False, is_flag=True)
 @click.option(
-    '--border/--no-border', default=False, help='If true, draw a border using border-emoji')
+    '--border', default=False, help='If true, draw a border using border-emoji', is_flag=True)
 @click.option('--border-emoji', default='fire')
 @click.option('--border-size', type=int, default=1)
 @click.option('--emojize/--no-emojize', default=True)
-def write_emoji_word(word, foreground, background, border, border_emoji, border_size, emojize):
+def write_emoji_word(
+    word: str,
+    foreground: str,
+    random_foreground: bool,
+    background: str,
+    random_background: bool,
+    border: bool,
+    border_emoji: str,
+    border_size: int,
+    emojize: bool,
+):
   """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
+
+  if random_background:
+    background = random_emoji_name()
+
+  if random_foreground:
+    foreground = random_emoji_name()
 
   # leave 1 empty column at the beggining
   output_lines = ['0' for i in range(7)]
@@ -396,7 +420,7 @@ def write_emoji_word(word, foreground, background, border, border_emoji, border_
       }))
 
   if emojize:
-    print(emoji.emojize(output_str))
+    print(emoji.emojize(output_str, use_aliases=True))
   else:
     print(output_str)
 
