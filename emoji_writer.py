@@ -336,41 +336,68 @@ letters_to_matrix = {
     '!': EXCLAMATION_MARK,
 }
 
+def get_emoji_list(emoji_source: str) -> list:
+    """ get list of emoji name based on specified type """
+    if emoji_source == 'uni_emoji':
+        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys())
+    elif emoji_source == 'slack_emoji':
+        return open('./slack_emoji_list.txt','r').read().splitlines()
+    raise Exception(f'Unsupported emoji type {emoji_source}')
 
-def random_emoji_name() -> str:
+
+def overlapping_emoji_name(word: str, emoji_source: str = 'uni_emoji') -> str:
+    """ return an emoji based on overlap with emojis. remove the leading and training :"""
+    emoji_names = get_emoji_list(emoji_source)
+    overlapping_names = [x.strip() for x in emoji_names if word in x]
+    if len(overlapping_names) == 0:
+        return random_emoji_name(emoji_source)
+    return random.choice(overlapping_names)[1:-1]
+
+def random_emoji_name(emoji_source: str = 'uni_emoji') -> str:
   """ return a random emoji. remove the leading and training :"""
-  return random.choice(list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys()))[1:-1]
+  return random.choice(get_emoji_list(emoji_source))[1:-1]
 
 
 @click.command()
 @click.option('--word', help='word to write', required=True)
 @click.option('--foreground', help='foreground emoji', default='thumbs_up')
 @click.option('--random-foreground', default=False, is_flag=True)
+@click.option('--suggested-foreground', default=False, is_flag=True)
 @click.option('--background', help='background emoji', default='white_large_square')
 @click.option('--random-background', default=False, is_flag=True)
+@click.option('--suggested-background', default=False, is_flag=True)
 @click.option(
     '--border', default=False, help='If true, draw a border using border-emoji', is_flag=True)
 @click.option('--border-emoji', default='fire')
 @click.option('--border-size', type=int, default=1)
 @click.option('--emojize/--no-emojize', default=True)
+@click.option('--emoji-source', default='uni_emoji')
 def write_emoji_word(
     word: str,
     foreground: str,
     random_foreground: bool,
+    suggested_foreground: bool,
     background: str,
     random_background: bool,
+    suggested_background: bool,
     border: bool,
     border_emoji: str,
     border_size: int,
     emojize: bool,
+    emoji_source: str,
 ):
   """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
-
   if random_background:
-    background = random_emoji_name()
+    background = random_emoji_name(emoji_source=emoji_source)
+
+  if suggested_background:
+    background = overlapping_emoji_name(word, emoji_source=emoji_source)
 
   if random_foreground:
-    foreground = random_emoji_name()
+    foreground = random_emoji_name(emoji_source=emoji_source)
+    
+  if suggested_foreground:
+    foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
 
   # leave 1 empty column at the beggining
   output_lines = ['0' for i in range(7)]
