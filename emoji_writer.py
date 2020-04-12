@@ -438,9 +438,9 @@ def write_emoji_word(
       }))
 
   if emojize:
-    print(emoji.emojize(output_str, use_aliases=True))
+    return emoji.emojize(output_str, use_aliases=True)
   else:
-    print(output_str)
+    return output_str
 
 
 def default_emoji_params() -> Dict:
@@ -452,7 +452,7 @@ def default_emoji_params() -> Dict:
       'background': 'white_large_square',
       'random_background': False,
       'suggested_background': False,
-      'boder': False,
+      'border': False,
       'border_emoji': 'fire',
       'border_size': 1,
       'emojize': True,
@@ -492,20 +492,21 @@ def main(
     emojize: bool,
     emoji_source: str,
 ) -> None:
-  write_emoji_word(
-      word,
-      foreground,
-      random_background,
-      suggested_background,
-      background,
-      random_background,
-      suggested_background,
-      border,
-      border_emoji,
-      border_size,
-      emojize,
-      emoji_source,
-  )
+  print(
+      write_emoji_word(
+          word,
+          foreground,
+          random_background,
+          suggested_background,
+          background,
+          random_background,
+          suggested_background,
+          border,
+          border_emoji,
+          border_size,
+          emojize,
+          emoji_source,
+      ))
 
 
 if __name__ == "__main__":
