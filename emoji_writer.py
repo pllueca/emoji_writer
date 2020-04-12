@@ -1,6 +1,7 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
+from typing import Dict
 import random
 
 import emoji
@@ -338,28 +339,28 @@ letters_to_matrix = {
 
 
 def get_emoji_list(emoji_source: str) -> list:
-    """ get list of emoji name based on specified type """
-    if emoji_source == "uni_emoji":
-        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys())
-    elif emoji_source == "slack_emoji":
-        with open("./slack_emoji_list.txt", "r") as f:
-            words = f.read().splitlines()
-        return words
-    raise Exception(f"Unsupported emoji type {emoji_source}")
+  """ get list of emoji name based on specified type """
+  if emoji_source == "uni_emoji":
+    return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys())
+  elif emoji_source == "slack_emoji":
+    with open("./slack_emoji_list.txt", "r") as f:
+      words = f.read().splitlines()
+    return words
+  raise Exception(f"Unsupported emoji type {emoji_source}")
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
-    """ return an emoji based on overlap with emojis. remove the leading and training :"""
-    emoji_names = get_emoji_list(emoji_source)
-    overlapping_names = [x.strip() for x in emoji_names if word in x]
-    if len(overlapping_names) == 0:
-        return random_emoji_name(emoji_source)
-    return random.choice(overlapping_names)[1:-1]
+  """ return an emoji based on overlap with emojis. remove the leading and training :"""
+  emoji_names = get_emoji_list(emoji_source)
+  overlapping_names = [x.strip() for x in emoji_names if word in x]
+  if len(overlapping_names) == 0:
+    return random_emoji_name(emoji_source)
+  return random.choice(overlapping_names)[1:-1]
 
 
 def random_emoji_name(emoji_source: str = "uni_emoji") -> str:
-    """ return a random emoji. remove the leading and training :"""
-    return random.choice(get_emoji_list(emoji_source))[1:-1]
+  """ return a random emoji. remove the leading and training :"""
+  return random.choice(get_emoji_list(emoji_source))[1:-1]
 
 
 def write_emoji_word(
@@ -375,70 +376,88 @@ def write_emoji_word(
     border_size: int,
     emojize: bool,
     emoji_source: str,
-):
-    """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
-    if random_background:
-        background = random_emoji_name(emoji_source=emoji_source)
+) -> str:
+  """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
+  if random_background:
+    background = random_emoji_name(emoji_source=emoji_source)
 
-    if suggested_background:
-        background = overlapping_emoji_name(word, emoji_source=emoji_source)
+  if suggested_background:
+    background = overlapping_emoji_name(word, emoji_source=emoji_source)
 
-    if random_foreground:
-        foreground = random_emoji_name(emoji_source=emoji_source)
+  if random_foreground:
+    foreground = random_emoji_name(emoji_source=emoji_source)
 
-    if suggested_foreground:
-        foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
+  if suggested_foreground:
+    foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
 
-    # leave 1 empty column at the beggining
-    output_lines = ["0" for i in range(7)]
+  # leave 1 empty column at the beggining
+  output_lines = ["0" for i in range(7)]
 
-    # draw each word
-    for char in word:
-        current_matrix = letters_to_matrix.get(char.lower(), EMPTY_LETTER)
-        # draw each line of this word
-        for i in range(7):
-            output_lines[i] = output_lines[i] + current_matrix[i] + "0"
+  # draw each word
+  for char in word:
+    current_matrix = letters_to_matrix.get(char.lower(), EMPTY_LETTER)
+    # draw each line of this word
+    for i in range(7):
+      output_lines[i] = output_lines[i] + current_matrix[i] + "0"
 
-    # merge the lines
-    # add 1 empty line at the top and at the bottom
-    # all lines should be the same length, add border
-    char_length = len(output_lines[0])
-    output_str = ""
+  # merge the lines
+  # add 1 empty line at the top and at the bottom
+  # all lines should be the same length, add border
+  char_length = len(output_lines[0])
+  output_str = ""
 
+  if border:
+    for _ in range(border_size):
+      output_str += "2" * (char_length + 2 * border_size) + "\n"
+
+  if border:
+    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+  else:
+    output_str += "0" * char_length + "\n"
+
+  for l in output_lines:
     if border:
-        for _ in range(border_size):
-            output_str += "2" * (char_length + 2 * border_size) + "\n"
-
-    if border:
-        output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+      output_str += ("2" * border_size) + l + ("2" * border_size) + "\n"
     else:
-        output_str += "0" * char_length + "\n"
+      output_str += l + "\n"
 
-    for l in output_lines:
-        if border:
-            output_str += ("2" * border_size) + l + ("2" * border_size) + "\n"
-        else:
-            output_str += l + "\n"
+  if border:
+    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+  else:
+    output_str += "0" * char_length + "\n"
 
-    if border:
-        output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
-    else:
-        output_str += "0" * char_length + "\n"
+  if border:
+    for _ in range(border_size):
+      output_str += "2" * (char_length + 2 * border_size) + "\n"
 
-    if border:
-        for _ in range(border_size):
-            output_str += "2" * (char_length + 2 * border_size) + "\n"
+  output_str = output_str.translate(
+      str.maketrans({
+          "0": f":{background}:",
+          "1": f":{foreground}:",
+          "2": f":{border_emoji}:",
+      }))
 
-    output_str = output_str.translate(
-        str.maketrans(
-            {"0": f":{background}:", "1": f":{foreground}:", "2": f":{border_emoji}:",}
-        )
-    )
+  if emojize:
+    print(emoji.emojize(output_str, use_aliases=True))
+  else:
+    print(output_str)
 
-    if emojize:
-        print(emoji.emojize(output_str, use_aliases=True))
-    else:
-        print(output_str)
+
+def default_emoji_params() -> Dict:
+  """ returns dictionary of the default parameters """
+  return {
+      'foreground': 'thumbs_up',
+      'random_foreground': False,
+      'suggested_foreground': False,
+      'background': 'white_large_square',
+      'random_background': False,
+      'suggested_background': False,
+      'boder': False,
+      'border_emoji': 'fire',
+      'border_size': 1,
+      'emojize': True,
+      'emoji_source': 'uni_emoji'
+  }
 
 
 @click.command()
@@ -472,22 +491,22 @@ def main(
     border_size: int,
     emojize: bool,
     emoji_source: str,
-):
-    write_emoji_word(
-        word,
-        foreground,
-        random_background,
-        suggested_background,
-        background,
-        random_background,
-        suggested_background,
-        border,
-        border_emoji,
-        border_size,
-        emojize,
-        emoji_source,
-    )
+) -> None:
+  write_emoji_word(
+      word,
+      foreground,
+      random_background,
+      suggested_background,
+      background,
+      random_background,
+      suggested_background,
+      border,
+      border_emoji,
+      border_size,
+      emojize,
+      emoji_source,
+  )
 
 
 if __name__ == "__main__":
-    main()  # pylint: disable=no-value-for-parameter
+  main()  # pylint: disable=no-value-for-parameter
