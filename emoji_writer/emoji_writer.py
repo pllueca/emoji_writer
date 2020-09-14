@@ -40,6 +40,66 @@ def random_emoji_name(emoji_source: str = "uni_emoji") -> str:
   return random.choice(get_emoji_list(emoji_source))[1:-1]
 
 
+def write_word(word,
+               foreground_emoji: str,
+               background_emoji: str,
+               border_emoji: str = "",
+               border_size: int = 1,
+               emojize: bool = True) -> str:
+  """ Convert the word into emojis """
+  # leave 1 empty column at the beggining
+  output_lines = ["0" for i in range(7)]
+
+  # draw each word
+  for char in word:
+    current_matrix = letters_to_matrix.get(char.lower(), EMPTY_LETTER)
+    # draw each line of this word
+    for i in range(7):
+      output_lines[i] = output_lines[i] + current_matrix[i] + "0"
+
+  # merge the lines
+  # add 1 empty line at the top and at the bottom
+  # all lines should be the same length, add border
+  char_length = len(output_lines[0])
+  output_str = ""
+
+  if border_emoji:
+    for _ in range(border_size):
+      output_str += "2" * (char_length + 2 * border_size) + "\n"
+
+  if border_emoji:
+    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+  else:
+    output_str += "0" * char_length + "\n"
+
+  for l in output_lines:
+    if border_emoji:
+      output_str += ("2" * border_size) + l + ("2" * border_size) + "\n"
+    else:
+      output_str += l + "\n"
+
+  if border_emoji:
+    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+  else:
+    output_str += "0" * char_length + "\n"
+
+  if border_emoji:
+    for _ in range(border_size):
+      output_str += "2" * (char_length + 2 * border_size) + "\n"
+
+  output_str = output_str.translate(
+      str.maketrans({
+          "0": f":{background_emoji}:",
+          "1": f":{foreground_emoji}:",
+          "2": f":{border_emoji}:",
+      }))
+  if emojize:
+    return emoji.emojize(output_str, use_aliases=True)
+  else:
+    return output_str
+  return output_str
+
+
 def write_emoji_word(
     word: str,
     foreground: str,
@@ -68,59 +128,13 @@ def write_emoji_word(
   if suggested_foreground:
     foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
 
-  # leave 1 empty column at the beggining
-  output_lines = ["0" for i in range(7)]
-
-  # draw each word
-  for char in word:
-    current_matrix = letters_to_matrix.get(char.lower(), EMPTY_LETTER)
-    # draw each line of this word
-    for i in range(7):
-      output_lines[i] = output_lines[i] + current_matrix[i] + "0"
-
-  # merge the lines
-  # add 1 empty line at the top and at the bottom
-  # all lines should be the same length, add border
-  char_length = len(output_lines[0])
-  output_str = ""
-
   if random_border:
     border_emoji = random_emoji_name(emoji_source)
-  if border:
-    for _ in range(border_size):
-      output_str += "2" * (char_length + 2 * border_size) + "\n"
 
-  if border:
-    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
-  else:
-    output_str += "0" * char_length + "\n"
+  if not border:
+    border_emoji = ""
 
-  for l in output_lines:
-    if border:
-      output_str += ("2" * border_size) + l + ("2" * border_size) + "\n"
-    else:
-      output_str += l + "\n"
-
-  if border:
-    output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
-  else:
-    output_str += "0" * char_length + "\n"
-
-  if border:
-    for _ in range(border_size):
-      output_str += "2" * (char_length + 2 * border_size) + "\n"
-
-  output_str = output_str.translate(
-      str.maketrans({
-          "0": f":{background}:",
-          "1": f":{foreground}:",
-          "2": f":{border_emoji}:",
-      }))
-
-  if emojize:
-    return emoji.emojize(output_str, use_aliases=True)
-  else:
-    return output_str
+  return write_word(word, foreground, background, border_emoji, border_size, emojize=emojize)
 
 
 def default_emoji_params() -> Dict:
@@ -212,19 +226,19 @@ python emoji_writer.py --word party --suggested-background --suggested-foregroun
 """
   print(
       write_emoji_word(
-          word,
-          foreground,
-          random_foreground,
-          suggested_foreground,
-          background,
-          random_background,
-          suggested_background,
-          border,
-          border_emoji,
-          random_border,
-          border_size,
-          emojize,
-          emoji_source,
+          word=word,
+          foreground=foreground,
+          random_foreground=random_foreground,
+          suggested_foreground=suggested_foreground,
+          background=background,
+          random_background=random_background,
+          suggested_background=suggested_background,
+          border=border,
+          border_emoji=border_emoji,
+          random_border=random_border,
+          border_size=border_size,
+          emojize=emojize,
+          emoji_source=emoji_source,
       ))
 
 
