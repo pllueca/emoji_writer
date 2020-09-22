@@ -2,340 +2,13 @@
 write works in 7x5 grids, with emojis
 """
 from typing import Dict, List, Tuple
+import sys
 import random
 
 import emoji
 import click
 
-# LETTER DEFINITIONS
-A = [
-    "01110",
-    "10001",
-    "10001",
-    "11111",
-    "10001",
-    "10001",
-    "10001",
-]
-
-B = [
-    "11110",
-    "10001",
-    "10001",
-    "11110",
-    "10001",
-    "10001",
-    "11110",
-]
-
-C = [
-    "01110",
-    "10001",
-    "10000",
-    "10000",
-    "10000",
-    "10001",
-    "01110",
-]
-
-D = [
-    "11110",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "11110",
-]
-
-E = [
-    "11111",
-    "10000",
-    "10000",
-    "11110",
-    "10000",
-    "10000",
-    "11111",
-]
-
-F = [
-    "11111",
-    "10000",
-    "10000",
-    "11110",
-    "10000",
-    "10000",
-    "10000",
-]
-
-G = [
-    "01110",
-    "10001",
-    "10000",
-    "10000",
-    "10011",
-    "10001",
-    "01110",
-]
-
-H = [
-    "10001",
-    "10001",
-    "10001",
-    "11111",
-    "10001",
-    "10001",
-    "10001",
-]
-
-I = [
-    "01110",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-    "01110",
-]
-
-J = [
-    "00111",
-    "00010",
-    "00010",
-    "00010",
-    "00010",
-    "10010",
-    "01100",
-]
-
-K = [
-    "10001",
-    "10010",
-    "10100",
-    "11000",
-    "10100",
-    "10010",
-    "10001",
-]
-
-L = [
-    "10000",
-    "10000",
-    "10000",
-    "10000",
-    "10000",
-    "10000",
-    "11111",
-]
-
-M = [
-    "10001",
-    "11011",
-    "10101",
-    "10101",
-    "10001",
-    "10001",
-    "10001",
-]
-
-N = [
-    "10001",
-    "10001",
-    "11001",
-    "10101",
-    "10011",
-    "10001",
-    "10001",
-]
-
-O = [
-    "01110",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "01110",
-]
-
-P = [
-    "11110",
-    "10001",
-    "10001",
-    "11110",
-    "10000",
-    "10000",
-    "10000",
-]
-
-Q = [
-    "01110",
-    "10001",
-    "10001",
-    "10001",
-    "10101",
-    "10010",
-    "01101",
-]
-
-R = [
-    "11110",
-    "10001",
-    "10001",
-    "11110",
-    "10100",
-    "10010",
-    "10001",
-]
-
-S = [
-    "01111",
-    "10000",
-    "10000",
-    "01110",
-    "00001",
-    "00001",
-    "11110",
-]
-
-T = [
-    "11111",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-]
-
-U = [
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "10001",
-    "01110",
-]
-
-V = [
-    "10001",
-    "10001",
-    "10001",
-    "01010",
-    "01010",
-    "00100",
-]
-
-W = [
-    "10001",
-    "10001",
-    "10101",
-    "10101",
-    "10101",
-    "11011",
-    "10001",
-]
-
-X = [
-    "10001",
-    "10001",
-    "01010",
-    "00100",
-    "01010",
-    "10001",
-    "10001",
-]
-
-Y = [
-    "10001",
-    "10001",
-    "01010",
-    "00100",
-    "00100",
-    "00100",
-    "00100",
-]
-
-Z = [
-    "11111",
-    "00001",
-    "00010",
-    "00100",
-    "01000",
-    "10000",
-    "11111",
-]
-
-EMPTY_LETTER = [
-    "11111",
-    "11111",
-    "11111",
-    "11111",
-    "11111",
-    "11111",
-    "11111",
-]
-
-SPACE = [
-    "000",
-    "000",
-    "000",
-    "000",
-    "000",
-    "000",
-    "000",
-]
-
-PIPE = [
-    "010",
-    "010",
-    "010",
-    "010",
-    "010",
-    "010",
-    "010",
-]
-
-EXCLAMATION_MARK = [
-    "010",
-    "010",
-    "010",
-    "010",
-    "010",
-    "000",
-    "010",
-]
-letters_to_matrix = {
-    "a": A,
-    "b": B,
-    "c": C,
-    "d": D,
-    "e": E,
-    "f": F,
-    "g": G,
-    "h": H,
-    "i": I,
-    "j": J,
-    "k": K,
-    "l": L,
-    "m": M,
-    "n": N,
-    "o": O,
-    "p": P,
-    "r": R,
-    "s": S,
-    "t": T,
-    "u": U,
-    "v": V,
-    "w": W,
-    "x": X,
-    "y": Y,
-    "z": Z,
-    " ": SPACE,
-    "|": PIPE,
-    "!": EXCLAMATION_MARK,
-}
+from letters import letters_to_matrix, EMPTY_LETTER
 
 
 def get_emoji_list(emoji_source: str) -> List[str]:
@@ -378,18 +51,19 @@ def write_emoji_word(
     border: bool,
     border_emoji: str,
     border_size: int,
+    random_border: bool,
     emojize: bool,
     emoji_source: str,
 ) -> str:
   """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
   if random_background:
-    background = random_emoji_name(emoji_source=emoji_source)
+    background = random_emoji_name(emoji_source)
 
   if suggested_background:
     background = overlapping_emoji_name(word, emoji_source=emoji_source)
 
   if random_foreground:
-    foreground = random_emoji_name(emoji_source=emoji_source)
+    foreground = random_emoji_name(emoji_source)
 
   if suggested_foreground:
     foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
@@ -410,6 +84,8 @@ def write_emoji_word(
   char_length = len(output_lines[0])
   output_str = ""
 
+  if random_border:
+    border_emoji = random_emoji_name(emoji_source)
   if border:
     for _ in range(border_size):
       output_str += "2" * (char_length + 2 * border_size) + "\n"
@@ -464,15 +140,42 @@ def default_emoji_params() -> Dict:
   }
 
 
+def print_examples() -> None:
+  """ Print some examples to stdout """
+
+  print("Emoji writter allows you to write words using emojis")
+  print()
+  print("python emoji_writer.py --word hello --foreground alien --background bright_button")
+  print(
+      write_emoji_word(
+          "hello",
+          "alien",
+          False,
+          False,
+          "bright_button",
+          False,
+          False,
+          False,
+          "",
+          0,
+          True,
+          "uni_emoji",
+      ))
+  return "a"
+
+
+
+
 @click.command()
-@click.option("--word", help="word to write", required=True)
-@click.option("--foreground", help="foreground emoji", default="thumbs_up")
-@click.option("--random-foreground", default=False, is_flag=True)
+@click.option("-w", "--word", help="word to write", required=True)
+@click.option("-fg", "--foreground", help="foreground emoji", default="thumbs_up")
+@click.option("-rf", "--random-foreground", default=False, is_flag=True)
 @click.option("--suggested-foreground", default=False, is_flag=True)
-@click.option("--background", help="background emoji", default="white_large_square")
-@click.option("--random-background", default=False, is_flag=True)
+@click.option("-bg", "--background", help="background emoji", default="white_large_square")
+@click.option("-rb", "--random-background", default=False, is_flag=True)
 @click.option("--suggested-background", default=False, is_flag=True)
 @click.option(
+    "-b",
     "--border",
     default=False,
     help="If true, draw a border using border-emoji",
@@ -480,6 +183,7 @@ def default_emoji_params() -> Dict:
 )
 @click.option("--border-emoji", default="fire")
 @click.option("--border-size", type=int, default=1)
+@click.option("-rbo", "--random-border", default=False, is_flag=True)
 @click.option("--emojize/--no-emojize", default=True)
 @click.option("--emoji-source", default="uni_emoji")
 def main(
@@ -493,20 +197,32 @@ def main(
     border: bool,
     border_emoji: str,
     border_size: int,
+    random_border: bool,
     emojize: bool,
     emoji_source: str,
 ) -> None:
+  """Emoji writter allows you to write words using emojis
+
+Examples
+
+\b
+python emoji_writer.py --word hello --foreground alien --background bright_button
+python emoji_writer.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2
+python emoji_writer.py --word "random" --random-foreground --random-background
+python emoji_writer.py --word party --suggested-background --suggested-foreground
+"""
   print(
       write_emoji_word(
           word,
           foreground,
-          random_background,
-          suggested_background,
+          random_foreground,
+          suggested_foreground,
           background,
           random_background,
           suggested_background,
           border,
           border_emoji,
+          random_border,
           border_size,
           emojize,
           emoji_source,

@@ -58,7 +58,7 @@ If you are feeling lucky you can use random emojis (some of them are smaller and
 🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤
 ```
 
-If you are feeling lucky you can use random emojis (some of them are smaller and it breaks the shapes):
+You can also let the program decide which emojis to use based on the input word!
 
 `python emoji_writer.py --word party --suggested-background --suggested-foreground`
 
