@@ -134,6 +134,7 @@ def default_emoji_params() -> Dict:
       "suggested_background": False,
       "border": False,
       "border_emoji": "fire",
+      "random_border": False,
       "border_size": 1,
       "emojize": True,
       "emoji_source": "uni_emoji",
@@ -162,8 +163,6 @@ def print_examples() -> None:
           "uni_emoji",
       ))
   return "a"
-
-
 
 
 @click.command()
