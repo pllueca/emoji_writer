@@ -1,7 +1,7 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
-from typing import Dict
+from typing import Dict, List, Tuple
 import random
 
 import emoji
@@ -338,7 +338,7 @@ letters_to_matrix = {
 }
 
 
-def get_emoji_list(emoji_source: str) -> list:
+def get_emoji_list(emoji_source: str) -> List[str]:
   """ get list of emoji name based on specified type """
   if emoji_source == "uni_emoji":
     return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys())
@@ -347,6 +347,10 @@ def get_emoji_list(emoji_source: str) -> list:
       words = f.read().splitlines()
     return words
   raise Exception(f"Unsupported emoji type {emoji_source}")
+
+
+def get_emoji_list_pairs() -> List[Tuple[str, str]]:
+  return [(name[1:-1], label) for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()]
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
@@ -446,17 +450,17 @@ def write_emoji_word(
 def default_emoji_params() -> Dict:
   """ returns dictionary of the default parameters """
   return {
-      'foreground': 'thumbs_up',
-      'random_foreground': False,
-      'suggested_foreground': False,
-      'background': 'white_large_square',
-      'random_background': False,
-      'suggested_background': False,
-      'border': False,
-      'border_emoji': 'fire',
-      'border_size': 1,
-      'emojize': True,
-      'emoji_source': 'uni_emoji'
+      "foreground": "thumbs_up",
+      "random_foreground": False,
+      "suggested_foreground": False,
+      "background": "white_large_square",
+      "random_background": False,
+      "suggested_background": False,
+      "border": False,
+      "border_emoji": "fire",
+      "border_size": 1,
+      "emojize": True,
+      "emoji_source": "uni_emoji",
   }
 
 
