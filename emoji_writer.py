@@ -8,7 +8,7 @@ import random
 import emoji
 import click
 
-from letters import letters_to_matrix, EMPTY_LETTER
+from .letters import letters_to_matrix, EMPTY_LETTER
 
 
 def get_emoji_list(emoji_source: str) -> List[str]:
