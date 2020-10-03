@@ -22,7 +22,10 @@ def get_emoji_list(emoji_source: str) -> list:
 
 
 def get_emoji_list_pairs() -> List[Tuple[str, str]]:
-  return [(name[1:-1], label) for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()]
+    return [
+        (name[1:-1], label)
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()
+    ]
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
@@ -144,21 +147,21 @@ def write_emoji_word(
 
 
 def default_emoji_params() -> Dict:
-  """ returns dictionary of the default parameters """
-  return {
-      "foreground": "thumbs_up",
-      "random_foreground": False,
-      "suggested_foreground": False,
-      "background": "white_large_square",
-      "random_background": False,
-      "suggested_background": False,
-      "border": False,
-      "border_emoji": "fire",
-      "random_border": False,
-      "border_size": 1,
-      "emojize": True,
-      "emoji_source": "uni_emoji",
-  }
+    """ returns dictionary of the default parameters """
+    return {
+        "foreground": "thumbs_up",
+        "random_foreground": False,
+        "suggested_foreground": False,
+        "background": "white_large_square",
+        "random_background": False,
+        "suggested_background": False,
+        "border": False,
+        "border_emoji": "fire",
+        "random_border": False,
+        "border_size": 1,
+        "emojize": True,
+        "emoji_source": "uni_emoji",
+    }
 
 
 def print_examples() -> None:
