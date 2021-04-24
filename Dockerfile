@@ -1,6 +1,11 @@
-FROM python:3.8-slim
+FROM python:3.9-slim
 RUN apt update
 
 WORKDIR /opt
-COPY . .
-RUN pip3 install -r requirements.txt
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt && rm requirements.txt
+
+ENV PYTHONPATH "${PYTHONPATH}:/opt"
+
+COPY emoji_writer ./emoji_writer
+COPY test ./test
