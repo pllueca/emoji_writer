@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --tag emoji_writer
     - name: Run the tests inside the container
-      run: docker run -it --rm emoji_writer pytest test
+      run: docker run --rm emoji_writer pytest test
