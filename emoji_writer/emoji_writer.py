@@ -85,11 +85,15 @@ def write_word(
     if border_emoji:
         output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
     else:
-        output_str += "0" * char_length + "\n"
+        output_str += "0" * char_length
 
     if border_emoji:
-        for _ in range(border_size):
-            output_str += "2" * (char_length + 2 * border_size) + "\n"
+        for border_idx in range(border_size):
+            output_str += "2" * (char_length + 2 * border_size)
+            # dont but \n at the end
+            if border_idx != border_size -1:
+                output_str += '\n'
+
 
     output_str = output_str.translate(
         str.maketrans(
@@ -141,9 +145,21 @@ def write_emoji_word(
     if not border:
         border_emoji = ""
 
-    return write_word(
-        word, foreground, background, border_emoji, border_size, emojize=emojize
-    )
+    lines = word.split("\n")
+    if len(lines) == 1:
+        return write_word(
+            word, foreground, background, border_emoji, border_size, emojize=emojize
+        )
+    output_word = ""
+    # TODO add spaces to lines to make them the same length
+    for line in lines:
+        output_word += (
+            write_word(
+                line, foreground, background, border_emoji, border_size, emojize=emojize
+            )
+            + "\n"
+        )
+    return output_word
 
 
 def default_emoji_params() -> Dict:
