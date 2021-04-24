@@ -49,8 +49,13 @@ def write_word(
     border_emoji: str = "",
     border_size: int = 1,
     emojize: bool = True,
+    first_line: bool = True,
+    last_line: bool = True,
 ) -> str:
-    """ Convert the word into emojis """
+    """Convert the word into emojis.
+    if first_line draw border on top
+    if last_line draw border on bottom
+    """
     # leave 1 empty column at the beggining
     output_lines = ["0" for i in range(7)]
 
@@ -67,7 +72,7 @@ def write_word(
     char_length = len(output_lines[0])
     output_str = ""
 
-    if border_emoji:
+    if border_emoji and first_line:
         for _ in range(border_size):
             output_str += "2" * (char_length + 2 * border_size) + "\n"
 
@@ -82,14 +87,20 @@ def write_word(
         else:
             output_str += l + "\n"
 
-    if border_emoji:
-        output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
-    else:
-        output_str += "0" * char_length + "\n"
+    if last_line:
+        if border_emoji:
+            output_str += (
+                "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+            )
+        else:
+            output_str += "0" * char_length
 
-    if border_emoji:
-        for _ in range(border_size):
-            output_str += "2" * (char_length + 2 * border_size) + "\n"
+        if border_emoji:
+            for border_idx in range(border_size):
+                output_str += "2" * (char_length + 2 * border_size)
+                # dont but \n at the end
+                if border_idx != border_size - 1:
+                    output_str += "\n"
 
     output_str = output_str.translate(
         str.maketrans(
@@ -141,9 +152,38 @@ def write_emoji_word(
     if not border:
         border_emoji = ""
 
-    return write_word(
-        word, foreground, background, border_emoji, border_size, emojize=emojize
-    )
+    lines = word.split("\n")
+    if len(lines) == 1:
+        return write_word(
+            word, foreground, background, border_emoji, border_size, emojize=emojize
+        )
+    # pad all lines up to longest line
+    line_length = lambda l: sum([3 if c == " " else 5 for c in l])
+    longest_line_length = max(line_length(l) for l in lines)
+    output_word = ""
+    # TODO add spaces to lines to make them the same length
+    for line_idx, line in enumerate(lines):
+        first_line = line_idx == 0
+        last_line = line_idx == len(lines) - 1
+        pad = longest_line_length - line_length(line)
+        long_pads = pad // 5
+        pad %= 5
+        med_pads = pad // 3
+        short_pads = pad % 3
+
+        # TODO pad inteligently here
+        padded_line = line + "@" * long_pads + "%" * med_pads + "#" * short_pads
+        output_word += write_word(
+            padded_line,
+            foreground,
+            background,
+            border_emoji,
+            border_size,
+            emojize,
+            first_line,
+            last_line,
+        )
+    return output_word
 
 
 def default_emoji_params() -> Dict:
