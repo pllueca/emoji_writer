@@ -83,7 +83,9 @@ You can also let the program decide which emojis to use based on the input word!
 ## TODO
 Features that would be nice to implement:
 
-* [-] Support for multiline output
-* [-] Random emojis, choosing emojis based on input word
+* [x] Support for multiline output
+* [x] Random emojis, choosing emojis based on input word
 * [-] Slack integration
+* [ ] groups of emojis: flags, faces, foods... Make able to get a random one from a group
+* [ ] list available emojis
 
