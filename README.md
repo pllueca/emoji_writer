@@ -8,7 +8,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-`python emoji_writer.py --word hello --foreground alien --background bright_button`
+`python main.py --word hello --foreground alien --background bright_button`
 
 ```
 🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 Also supports and optional border:
 
-`python emoji_writer.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
+`python main.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
 
 ```
 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -44,7 +44,7 @@ Also supports and optional border:
 
 If you are feeling lucky you can use random emojis (some of them are smaller and it breaks the shapes):
 
-`python emoji_writer.py --word "random" --random-foreground --random-background`
+`python main.py --word "random" --random-foreground --random-background`
 
 ```
 🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤
@@ -60,7 +60,7 @@ If you are feeling lucky you can use random emojis (some of them are smaller and
 
 You can also let the program decide which emojis to use based on the input word!
 
-`python emoji_writer.py --word party --suggested-background --suggested-foreground`
+`python main.py --word party --suggested-background --suggested-foreground`
 
 ```
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉

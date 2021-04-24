@@ -43,11 +43,10 @@ def main(
 
     Examples
 
-    \b
-    python emoji_writer.py --word hello --foreground alien --background bright_button
-    python emoji_writer.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2
-    python emoji_writer.py --word "random" --random-foreground --random-background
-    python emoji_writer.py --word party --suggested-background --suggested-foreground"""
+    python main.py --word hello --foreground alien --background bright_button
+    python main.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2
+    python main.py --word "random" -rf -rb
+    python main.py --word party --suggested-background --suggested-foreground"""
     print(
         write_emoji_word(
             word=word,
