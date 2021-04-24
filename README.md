@@ -6,6 +6,11 @@
 pip install -r requirements.txt
 ```
 
+to run the tests
+```
+pytest test
+```
+
 ## Usage
 
 `python main.py --word hello --foreground alien --background bright_button`
