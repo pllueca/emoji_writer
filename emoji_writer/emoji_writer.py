@@ -49,8 +49,13 @@ def write_word(
     border_emoji: str = "",
     border_size: int = 1,
     emojize: bool = True,
+    first_line: bool = True,
+    last_line: bool = True,
 ) -> str:
-    """ Convert the word into emojis """
+    """ Convert the word into emojis. 
+    if first_line draw border on top 
+    if last_line draw border on bottom
+    """
     # leave 1 empty column at the beggining
     output_lines = ["0" for i in range(7)]
 
@@ -67,7 +72,7 @@ def write_word(
     char_length = len(output_lines[0])
     output_str = ""
 
-    if border_emoji:
+    if border_emoji and first_line:
         for _ in range(border_size):
             output_str += "2" * (char_length + 2 * border_size) + "\n"
 
@@ -82,18 +87,18 @@ def write_word(
         else:
             output_str += l + "\n"
 
-    if border_emoji:
-        output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
-    else:
-        output_str += "0" * char_length
+    if last_line:
+        if border_emoji:
+            output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
+        else:
+            output_str += "0" * char_length
 
-    if border_emoji:
-        for border_idx in range(border_size):
-            output_str += "2" * (char_length + 2 * border_size)
-            # dont but \n at the end
-            if border_idx != border_size -1:
-                output_str += '\n'
-
+        if border_emoji:
+            for border_idx in range(border_size):
+                output_str += "2" * (char_length + 2 * border_size)
+                # dont but \n at the end
+                if border_idx != border_size - 1:
+                    output_str += "\n"
 
     output_str = output_str.translate(
         str.maketrans(
@@ -152,10 +157,19 @@ def write_emoji_word(
         )
     output_word = ""
     # TODO add spaces to lines to make them the same length
-    for line in lines:
+    for line_idx, line in enumerate(lines):
+        first_line = line_idx == 0
+        last_line = line_idx == len(lines) - 1
         output_word += (
             write_word(
-                line, foreground, background, border_emoji, border_size, emojize=emojize
+                line,
+                foreground,
+                background,
+                border_emoji,
+                border_size,
+                emojize,
+                first_line,
+                last_line,
             )
             + "\n"
         )

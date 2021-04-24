@@ -1,4 +1,4 @@
-from emoji_writer import default_emoji_params, write_word
+from emoji_writer import default_emoji_params, write_word, write_emoji_word
 
 
 def test_write_word_defaults():
@@ -67,13 +67,15 @@ def test_write_word_with_spaces():
         emoji_word == expected
     ), f"write_emoji_word produced wrong result, expected: {expected}, got: {emoji_word}"
 
+
 def test_multiline_same_length():
     default_params = default_emoji_params()
-    emoji_word = write_word(
+    emoji_word = write_emoji_word(
         "asd\nfgh",
         default_params["foreground"],
         default_params["background"],
     )
+    print(emoji_word)
     expected = """⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
 ⬜⬜👍👍👍⬜⬜⬜👍👍👍👍⬜👍👍👍👍⬜⬜
 ⬜👍⬜⬜⬜👍⬜👍⬜⬜⬜⬜⬜👍⬜⬜⬜👍⬜
