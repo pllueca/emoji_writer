@@ -28,6 +28,13 @@ def get_emoji_list_pairs() -> List[Tuple[str, str]]:
     ]
 
 
+def get_emoji_dict() -> Dict[str, str]:
+    return {
+        name[1:-1]: label
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()
+    }
+
+
 def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
     """ return an emoji based on overlap with emojis. remove the leading and training :"""
     emoji_names = get_emoji_list(emoji_source)
@@ -210,22 +217,42 @@ def print_examples() -> None:
     print("Emoji writter allows you to write words using emojis")
     print()
     print(
-        "python emoji_writer.py --word hello --foreground alien --background bright_button"
+        "python main.py write --word hello --foreground alien --background bright_button"
     )
     print(
         write_emoji_word(
             "hello",
-            "alien",
-            False,
-            False,
-            "bright_button",
-            False,
-            False,
-            False,
-            "",
-            0,
-            True,
-            "uni_emoji",
+            foreground="alien",
+            random_foreground=False,
+            suggested_foreground=False,
+            background="bright_button",
+            random_background=False,
+            suggested_background=False,
+            border=False,
+            border_emoji="",
+            border_size=0,
+            random_border=False,
+            emojize=True,
+            emoji_source="uni_emoji",
         )
     )
-    return "a"
+
+    print()
+    print("python main.py --word party --suggested-background --suggested-foreground")
+    print(
+        write_emoji_word(
+            "party",
+            foreground="",
+            random_foreground=False,
+            suggested_foreground=True,
+            background="",
+            random_background=False,
+            suggested_background=True,
+            border=False,
+            border_emoji="",
+            border_size=0,
+            random_border=False,
+            emojize=True,
+            emoji_source="uni_emoji",
+        )
+    )

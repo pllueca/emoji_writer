@@ -1,8 +1,13 @@
 import click
-from emoji_writer import write_emoji_word
+from emoji_writer import write_emoji_word, get_emoji_dict, emoji_groups, print_examples
 
 
-@click.command()
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
 @click.option("-w", "--word", help="word to write", required=True)
 @click.option("-fg", "--foreground", help="foreground emoji", default="thumbs_up")
 @click.option("-rf", "--random-foreground", default=False, is_flag=True)
@@ -24,7 +29,7 @@ from emoji_writer import write_emoji_word
 @click.option("-rbo", "--random-border", default=False, is_flag=True)
 @click.option("--emojize/--no-emojize", default=True)
 @click.option("--emoji-source", default="uni_emoji")
-def main(
+def write(
     word: str,
     foreground: str,
     random_foreground: bool,
@@ -66,5 +71,35 @@ def main(
     )
 
 
+@cli.command()
+@click.argument("group", required=False)
+def list(group=None):
+    """ Prints a list of the available emojis """
+
+    all_emojis = get_emoji_dict()
+    if group is not None:
+        if group not in emoji_groups:
+            print(
+                f"Group of emojis {group} not available. "
+                f"Avaliable groups: {list(emoji_groups.keys())}"
+            )
+            return
+        emojis_to_list = emoji_groups[group]
+        print(f"Available emojis for group <{group}>:")
+    else:
+        print("Available emojis:")
+        emojis_to_list = [t[0] for t in all_emojis]
+
+    for emoji_str in emojis_to_list:
+        emoji = all_emojis[emoji_str]
+        print(f"{emoji_str}: {emoji}")
+
+
+@cli.command()
+def examples():
+    """ print some examples """
+    print_examples()
+
+
 if __name__ == "__main__":
-    main()  # pylint: disable=no-value-for-parameter
+    cli()

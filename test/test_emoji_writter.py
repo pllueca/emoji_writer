@@ -1,4 +1,9 @@
-from emoji_writer import default_emoji_params, write_word, write_emoji_word
+from emoji_writer import (
+    default_emoji_params,
+    write_word,
+    write_emoji_word,
+    print_examples,
+)
 
 
 def test_write_word_defaults():
@@ -106,3 +111,8 @@ def test_multiline_same_length():
     assert (
         emoji_word == expected
     ), f"write_emoji_word produced wrong result, expected: {expected}, got: {emoji_word}"
+
+
+def test_print_examples():
+    """ test that it doesnt crash """
+    print_examples()
