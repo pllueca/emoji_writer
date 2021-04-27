@@ -13,7 +13,7 @@ from .letters import letters_to_matrix, EMPTY_LETTER
 def get_emoji_list(emoji_source: str) -> list:
     """ get list of emoji name based on specified type """
     if emoji_source == "uni_emoji":
-        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE.keys())
+        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
     elif emoji_source == "slack_emoji":
         with open("./slack_emoji_list.txt", "r") as f:
             words = f.read().splitlines()
@@ -24,14 +24,14 @@ def get_emoji_list(emoji_source: str) -> list:
 def get_emoji_list_pairs() -> List[Tuple[str, str]]:
     return [
         (name[1:-1], label)
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
     ]
 
 
 def get_emoji_dict() -> Dict[str, str]:
     return {
         name[1:-1]: label
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE.items()
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
     }
 
 
