@@ -1,5 +1,6 @@
+from typing import Optional
 import click
-from emoji_writer import write_emoji_word, get_emoji_dict, emoji_groups, print_examples
+from emoji_writer import write_emoji_word, print_examples, list_emojis
 
 
 @click.group()
@@ -73,26 +74,9 @@ def write(
 
 @cli.command()
 @click.argument("group", required=False)
-def list(group=None):
+def list(group: Optional[str] = None):
     """ Prints a list of the available emojis """
-
-    all_emojis = get_emoji_dict()
-    if group is not None:
-        if group not in emoji_groups:
-            print(
-                f"Group of emojis {group} not available. "
-                f"Avaliable groups: {list(emoji_groups.keys())}"
-            )
-            return
-        emojis_to_list = emoji_groups[group]
-        print(f"Available emojis for group <{group}>:")
-    else:
-        print("Available emojis:")
-        emojis_to_list = [t[0] for t in all_emojis]
-
-    for emoji_str in emojis_to_list:
-        emoji = all_emojis[emoji_str]
-        print(f"{emoji_str}: {emoji}")
+    list_emojis(group)
 
 
 @cli.command()

@@ -1,5 +1,37 @@
 """ Groups of emojis """
-from typing import Dict, List
+from functools import cache
+
+from typing import Dict, List, Tuple
+import emoji
+
+
+@cache
+def get_emoji_list_names(emoji_source: str) -> list:
+    """ get list of emoji name based on specified type """
+    if emoji_source == "uni_emoji":
+        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
+    elif emoji_source == "slack_emoji":
+        with open("./slack_emoji_list.txt", "r") as f:
+            words = f.read().splitlines()
+        return words
+    raise Exception(f"Unsupported emoji type {emoji_source}")
+
+
+@cache
+def get_emoji_list_pairs() -> List[Tuple[str, str]]:
+    return [
+        (name[1:-1], label)
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
+    ]
+
+
+@cache
+def get_emoji_dict() -> Dict[str, str]:
+    return {
+        name[1:-1]: label
+        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
+    }
+
 
 # emojis representing a flag
 FLAGS = [
@@ -264,5 +296,22 @@ FLAGS = [
 
 FACES = []
 
+short_emojis = [
+    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) == 1
+]
 
-emoji_groups: Dict[str, List[str]] = {"flags": FLAGS}
+
+medium_emojis = [
+    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) == 2
+]
+
+long_emojis = [
+    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) >= 2
+]
+
+emoji_groups: Dict[str, List[str]] = {
+    "flags": FLAGS,
+    "short": short_emojis,
+    "medium": medium_emojis,
+    "long": long_emojis,
+}

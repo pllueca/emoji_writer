@@ -1,43 +1,19 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 import sys
 import random
 
 import emoji
 
 from .letters import letters_to_matrix, EMPTY_LETTER
-
-
-def get_emoji_list(emoji_source: str) -> list:
-    """ get list of emoji name based on specified type """
-    if emoji_source == "uni_emoji":
-        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
-    elif emoji_source == "slack_emoji":
-        with open("./slack_emoji_list.txt", "r") as f:
-            words = f.read().splitlines()
-        return words
-    raise Exception(f"Unsupported emoji type {emoji_source}")
-
-
-def get_emoji_list_pairs() -> List[Tuple[str, str]]:
-    return [
-        (name[1:-1], label)
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
-    ]
-
-
-def get_emoji_dict() -> Dict[str, str]:
-    return {
-        name[1:-1]: label
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
-    }
+from .groups import get_emoji_list_names, get_emoji_dict, emoji_groups
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
     """ return an emoji based on overlap with emojis. remove the leading and training :"""
-    emoji_names = get_emoji_list(emoji_source)
+    emoji_names = get_emoji_list_names(emoji_source)
     overlapping_names = [x.strip() for x in emoji_names if word in x]
     if len(overlapping_names) == 0:
         return random_emoji_name(emoji_source)
@@ -46,7 +22,7 @@ def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
 
 def random_emoji_name(emoji_source: str = "uni_emoji") -> str:
     """ return a random emoji. remove the leading and training :"""
-    return random.choice(get_emoji_list(emoji_source))[1:-1]
+    return random.choice(get_emoji_list_names(emoji_source))[1:-1]
 
 
 def write_word(
@@ -256,3 +232,24 @@ def print_examples() -> None:
             emoji_source="uni_emoji",
         )
     )
+
+
+def list_emojis(group: Optional[str] = None) -> None:
+    """ list the available emojis """
+    all_emojis = get_emoji_dict()
+    if group is not None:
+        if group not in emoji_groups:
+            print(
+                f"Group of emojis {group} not available. "
+                f"Avaliable groups: {list(emoji_groups.keys())}"
+            )
+            return
+        emojis_to_list = emoji_groups[group]
+        print(f"Available emojis for group <{group}>:")
+    else:
+        print("Available emojis:")
+        emojis_to_list = [t for t in all_emojis]
+
+    for emoji_str in emojis_to_list:
+        emoji = all_emojis[emoji_str]
+        print(f"{emoji_str}: {emoji}")

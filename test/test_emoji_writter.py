@@ -3,6 +3,7 @@ from emoji_writer import (
     write_word,
     write_emoji_word,
     print_examples,
+    list_emojis,
 )
 
 
@@ -116,3 +117,11 @@ def test_multiline_same_length():
 def test_print_examples():
     """ test that it doesnt crash """
     print_examples()
+
+
+def test_list_emojis():
+    list_emojis("flags")
+
+
+def test_list_emojis():
+    list_emojis()

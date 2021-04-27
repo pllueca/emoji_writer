@@ -10,4 +10,5 @@ RUN pip install --upgrade pip==21.0.1 &&\
 ENV PYTHONPATH "${PYTHONPATH}:/opt"
 
 COPY emoji_writer ./emoji_writer
+COPY main.py main.py
 COPY test ./test
