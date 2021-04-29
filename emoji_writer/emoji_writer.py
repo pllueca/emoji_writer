@@ -103,17 +103,19 @@ def write_word(
 
 def write_emoji_word(
     word: str,
-    foreground: str,
-    random_foreground: bool,
-    suggested_foreground: bool,
-    background: str,
-    random_background: bool,
-    suggested_background: bool,
-    border: bool,
-    border_emoji: str,
-    border_size: int,
-    random_border: bool,
-    emojize: bool,
+    foreground: Optional[str]=None,
+    random_foreground: bool=False,
+    suggested_foreground: Optional[bool]=None,
+    background: Optional[str] = None,
+    random_background: bool=False,
+    suggested_background: bool=False,
+    border: bool=False,
+    border_emoji: Optional[str]=None,
+    border_size: int=1,
+    random_border: bool=False,
+    emojize: bool=True,
+    emoji_group_foreground: Optional[str] = None,
+    emoji_group_background: Optional[str] = None,
 ) -> str:
     """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
     if random_background:
