@@ -15,4 +15,7 @@ ipy: build
 bash: build
 	docker run --rm -it emoji_writer bash
 
+fmt:
+	black .
+	isort .
 

@@ -1,6 +1,8 @@
 from typing import Optional
+
 import click
-from emoji_writer import write_emoji_word, print_examples, list_emojis
+
+from emoji_writer import list_emojis, print_examples, write_emoji_word
 
 
 @click.group()
@@ -29,7 +31,6 @@ def cli():
 @click.option("--border-size", type=int, default=1)
 @click.option("-rbo", "--random-border", default=False, is_flag=True)
 @click.option("--emojize/--no-emojize", default=True)
-@click.option("--emoji-source", default="uni_emoji")
 def write(
     word: str,
     foreground: str,
@@ -43,7 +44,6 @@ def write(
     border_size: int,
     random_border: bool,
     emojize: bool,
-    emoji_source: str,
 ) -> None:
     """Emoji writter allows you to write words using emojis
 
@@ -67,7 +67,6 @@ def write(
             random_border=random_border,
             border_size=border_size,
             emojize=emojize,
-            emoji_source=emoji_source,
         )
     )
 

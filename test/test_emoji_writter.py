@@ -1,9 +1,9 @@
 from emoji_writer import (
     default_emoji_params,
-    write_word,
-    write_emoji_word,
-    print_examples,
     list_emojis,
+    print_examples,
+    write_emoji_word,
+    write_word,
 )
 
 
@@ -88,7 +88,6 @@ def test_multiline_same_length():
         border_size=1,
         random_border=False,
         emojize=True,
-        emoji_source="uni_emoji",
     )
     expected = """\
 ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
