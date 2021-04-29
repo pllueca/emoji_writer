@@ -1,6 +1,8 @@
 from typing import Optional
+
 import click
-from emoji_writer import write_emoji_word, print_examples, list_emojis
+
+from emoji_writer import list_emojis, print_examples, write_emoji_word
 
 
 @click.group()

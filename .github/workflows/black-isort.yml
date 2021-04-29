@@ -15,6 +15,5 @@ jobs:
       - name: Install dependencies
         run: |
           pip install black isort
-
       - run: black .
       - run: isort . 

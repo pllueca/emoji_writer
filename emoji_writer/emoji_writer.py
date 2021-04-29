@@ -1,14 +1,14 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
-from typing import Dict, List, Tuple, Optional
-import sys
 import random
+import sys
+from typing import Dict, List, Optional, Tuple
 
 import emoji
 
-from .letters import letters_to_matrix, EMPTY_LETTER
-from .groups import get_emoji_list_names, get_emoji_dict, emoji_groups
+from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names
+from .letters import EMPTY_LETTER, letters_to_matrix
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "short") -> str:
@@ -103,17 +103,17 @@ def write_word(
 
 def write_emoji_word(
     word: str,
-    foreground: Optional[str]=None,
-    random_foreground: bool=False,
-    suggested_foreground: Optional[bool]=None,
+    foreground: Optional[str] = None,
+    random_foreground: bool = False,
+    suggested_foreground: Optional[bool] = None,
     background: Optional[str] = None,
-    random_background: bool=False,
-    suggested_background: bool=False,
-    border: bool=False,
-    border_emoji: Optional[str]=None,
-    border_size: int=1,
-    random_border: bool=False,
-    emojize: bool=True,
+    random_background: bool = False,
+    suggested_background: bool = False,
+    border: bool = False,
+    border_emoji: Optional[str] = None,
+    border_size: int = 1,
+    random_border: bool = False,
+    emojize: bool = True,
     emoji_group_foreground: Optional[str] = None,
     emoji_group_background: Optional[str] = None,
 ) -> str:

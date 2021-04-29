@@ -1,8 +1,8 @@
 """ Groups of emojis """
 import os
 from functools import cache
-
 from typing import Dict, List, Tuple
+
 import emoji
 
 
@@ -308,7 +308,6 @@ long_emojis = [
 ]
 
 
-
 SLACK_EMOJIS_FILENAME = "./slack_emoji_list.txt"
 
 slack_emojis = []
@@ -322,5 +321,5 @@ emoji_groups: Dict[str, List[str]] = {
     "medium": medium_emojis,
     "long": long_emojis,
     "all": all_emojis,
-    "slack": slack_emojis
+    "slack": slack_emojis,
 }
