@@ -11,7 +11,7 @@ from .letters import letters_to_matrix, EMPTY_LETTER
 from .groups import get_emoji_list_names, get_emoji_dict, emoji_groups
 
 
-def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
+def overlapping_emoji_name(word: str, emoji_source: str = "short") -> str:
     """ return an emoji based on overlap with emojis. remove the leading and training :"""
     emoji_names = get_emoji_list_names(emoji_source)
     overlapping_names = [x.strip() for x in emoji_names if word in x]
@@ -20,7 +20,7 @@ def overlapping_emoji_name(word: str, emoji_source: str = "uni_emoji") -> str:
     return random.choice(overlapping_names)[1:-1]
 
 
-def random_emoji_name(emoji_source: str = "uni_emoji") -> str:
+def random_emoji_name(emoji_source: str = "short") -> str:
     """ return a random emoji. remove the leading and training :"""
     return random.choice(get_emoji_list_names(emoji_source))[1:-1]
 
@@ -114,23 +114,22 @@ def write_emoji_word(
     border_size: int,
     random_border: bool,
     emojize: bool,
-    emoji_source: str,
 ) -> str:
     """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
     if random_background:
-        background = random_emoji_name(emoji_source)
+        background = random_emoji_name()
 
     if suggested_background:
-        background = overlapping_emoji_name(word, emoji_source=emoji_source)
+        background = overlapping_emoji_name(word)
 
     if random_foreground:
-        foreground = random_emoji_name(emoji_source)
+        foreground = random_emoji_name()
 
     if suggested_foreground:
-        foreground = overlapping_emoji_name(word, emoji_source=emoji_source)
+        foreground = overlapping_emoji_name(word)
 
     if random_border:
-        border_emoji = random_emoji_name(emoji_source)
+        border_emoji = random_emoji_name()
 
     if not border:
         border_emoji = ""
@@ -183,7 +182,6 @@ def default_emoji_params() -> Dict:
         "random_border": False,
         "border_size": 1,
         "emojize": True,
-        "emoji_source": "uni_emoji",
     }
 
 
@@ -209,7 +207,6 @@ def print_examples() -> None:
             border_size=0,
             random_border=False,
             emojize=True,
-            emoji_source="uni_emoji",
         )
     )
 
@@ -229,7 +226,6 @@ def print_examples() -> None:
             border_size=0,
             random_border=False,
             emojize=True,
-            emoji_source="uni_emoji",
         )
     )
 

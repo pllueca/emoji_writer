@@ -88,7 +88,6 @@ def test_multiline_same_length():
         border_size=1,
         random_border=False,
         emojize=True,
-        emoji_source="uni_emoji",
     )
     expected = """\
 ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜

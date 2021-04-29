@@ -1,4 +1,5 @@
 """ Groups of emojis """
+import os
 from functools import cache
 
 from typing import Dict, List, Tuple
@@ -8,13 +9,9 @@ import emoji
 @cache
 def get_emoji_list_names(emoji_source: str) -> list:
     """ get list of emoji name based on specified type """
-    if emoji_source == "uni_emoji":
-        return list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
-    elif emoji_source == "slack_emoji":
-        with open("./slack_emoji_list.txt", "r") as f:
-            words = f.read().splitlines()
-        return words
-    raise Exception(f"Unsupported emoji type {emoji_source}")
+    if emoji_source not in emoji_groups:
+        raise KeyError(f"Unsupported emoji group {emoji_source}")
+    return emoji_groups[emoji_source]
 
 
 @cache
@@ -295,6 +292,7 @@ FLAGS = [
 ]
 
 FACES = []
+all_emojis = list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
 
 short_emojis = [
     k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) == 1
@@ -309,9 +307,20 @@ long_emojis = [
     k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) >= 2
 ]
 
+
+
+SLACK_EMOJIS_FILENAME = "./slack_emoji_list.txt"
+
+slack_emojis = []
+if os.path.isfile(SLACK_EMOJIS_FILENAME):
+    with open(SLACK_EMOJIS_FILENAME, "r") as f:
+        slack_emojis = [f.read().splitlines()]
+
 emoji_groups: Dict[str, List[str]] = {
     "flags": FLAGS,
     "short": short_emojis,
     "medium": medium_emojis,
     "long": long_emojis,
+    "all": all_emojis,
+    "slack": slack_emojis
 }
