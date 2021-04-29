@@ -1,8 +1,14 @@
+from typing import Optional
 import click
-from emoji_writer import write_emoji_word
+from emoji_writer import write_emoji_word, print_examples, list_emojis
 
 
-@click.command()
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
 @click.option("-w", "--word", help="word to write", required=True)
 @click.option("-fg", "--foreground", help="foreground emoji", default="thumbs_up")
 @click.option("-rf", "--random-foreground", default=False, is_flag=True)
@@ -24,7 +30,7 @@ from emoji_writer import write_emoji_word
 @click.option("-rbo", "--random-border", default=False, is_flag=True)
 @click.option("--emojize/--no-emojize", default=True)
 @click.option("--emoji-source", default="uni_emoji")
-def main(
+def write(
     word: str,
     foreground: str,
     random_foreground: bool,
@@ -66,5 +72,18 @@ def main(
     )
 
 
+@cli.command()
+@click.argument("group", required=False)
+def list(group: Optional[str] = None):
+    """ Prints a list of the available emojis """
+    list_emojis(group)
+
+
+@cli.command()
+def examples():
+    """ print some examples """
+    print_examples()
+
+
 if __name__ == "__main__":
-    main()  # pylint: disable=no-value-for-parameter
+    cli()
