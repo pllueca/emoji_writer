@@ -114,21 +114,22 @@ def write_emoji_word(
     border_size: int = 1,
     random_border: bool = False,
     emojize: bool = True,
-    emoji_group_foreground: Optional[str] = None,
-    emoji_group_background: Optional[str] = None,
+    emoji_group_foreground: str = "short",
+    emoji_group_background: str = "short",
+    emoji_group_border: str = "short"
 ) -> str:
     """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
     if random_background:
-        background = random_emoji_name()
+        background = random_emoji_name(emoji_group_background)
 
     if suggested_background:
-        background = overlapping_emoji_name(word)
+        background = overlapping_emoji_name(word, emoji_group_background)
 
     if random_foreground:
-        foreground = random_emoji_name()
+        foreground = random_emoji_name(emoji_group_foreground)
 
     if suggested_foreground:
-        foreground = overlapping_emoji_name(word)
+        foreground = overlapping_emoji_name(word, emoji_group_foreground)
 
     if random_border:
         border_emoji = random_emoji_name()
