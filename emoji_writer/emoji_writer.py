@@ -116,7 +116,7 @@ def write_emoji_word(
     emojize: bool = True,
     emoji_group_foreground: str = "short",
     emoji_group_background: str = "short",
-    emoji_group_border: str = "short"
+    emoji_group_border: str = "short",
 ) -> str:
     """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
     if random_background:
