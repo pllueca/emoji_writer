@@ -55,7 +55,7 @@ def write(
     python main.py --word party --suggested-background --suggested-foreground"""
     print(
         write_emoji_word(
-            word=word,
+            word,
             foreground=foreground,
             random_foreground=random_foreground,
             suggested_foreground=suggested_foreground,
