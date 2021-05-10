@@ -11,7 +11,7 @@ to run the tests
 pytest test
 ```
 
-## Usage
+## Usage (Python module)
 
 `python main.py --word hello --foreground alien --background bright_button`
 
@@ -79,13 +79,22 @@ You can also let the program decide which emojis to use based on the input word!
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉
 ```
 
+## Usage (server)
+The file `app.py` implements an HTTP webserver with an endpoint to generate emoji words. It can be ran with `make runserver`. It runs inside a docker container that exposes port 8000.
+
+Endpoints:
+
+* `GET /`
+* `GET /{word}`
+
 
 ## TODO
 Features that would be nice to implement:
 
 * [x] Support for multiline output
 * [x] Random emojis, choosing emojis based on input word
-* [-] Slack integration
+* [ ] Slack integration
 * [ ] groups of emojis: flags, faces, foods... Make able to get a random one from a group
 * [ ] list available emojis
+* [x] serving emojis through an http api
 
