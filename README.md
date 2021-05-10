@@ -13,7 +13,7 @@ pytest test
 
 ## Usage (Python module)
 
-`python main.py --word hello --foreground alien --background bright_button`
+`python main.py write --word hello --foreground alien --background bright_button`
 
 ```
 🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆
@@ -29,7 +29,7 @@ pytest test
 
 Also supports and optional border:
 
-`python main.py --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
+`python main.py write --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
 
 ```
 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -49,7 +49,7 @@ Also supports and optional border:
 
 If you are feeling lucky you can use random emojis (some of them are smaller and it breaks the shapes):
 
-`python main.py --word "random" --random-foreground --random-background`
+`python main.py write --word "random" --random-foreground --random-background`
 
 ```
 🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤
@@ -65,7 +65,7 @@ If you are feeling lucky you can use random emojis (some of them are smaller and
 
 You can also let the program decide which emojis to use based on the input word!
 
-`python main.py --word party --suggested-background --suggested-foreground`
+`python main.py write --word party --suggested-background --suggested-foreground`
 
 ```
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉
@@ -78,6 +78,59 @@ You can also let the program decide which emojis to use based on the input word!
 🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🎉🥳🎉🎉🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉
 ```
+
+Letters can also be written in vertical:
+
+`python main.py write --word hello --foreground fire --background white_large_square --border --border-emoji ATM_sign --vertical`
+
+outputs
+```
+🏧🏧🏧🏧🏧🏧🏧🏧🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥🔥🔥🔥🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧⬜🔥🔥🔥🔥🔥⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥🔥🔥🔥⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥🔥🔥🔥🔥⬜🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥🔥🔥🔥🔥⬜🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥⬜⬜⬜⬜⬜🏧
+🏧⬜🔥🔥🔥🔥🔥⬜🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧⬜⬜🔥🔥🔥⬜⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜🔥⬜⬜⬜🔥⬜🏧
+🏧⬜⬜🔥🔥🔥⬜⬜🏧
+🏧⬜⬜⬜⬜⬜⬜⬜🏧
+🏧🏧🏧🏧🏧🏧🏧🏧🏧
+```
+
+You can print all the examples running `python main.py examples`
 
 ## Usage (server)
 The file `app.py` implements an HTTP webserver with an endpoint to generate emoji words. It can be ran with `make runserver`. It runs inside a docker container that exposes port 8000.

@@ -6,7 +6,7 @@ ARG mode="writer"
 RUN echo $debug
 RUN apt update
 
-WORKDIR /opt
+WORKDIR /pip
 COPY requirements.txt .
 COPY requirements_server.txt .
 
@@ -17,6 +17,7 @@ RUN pip install --upgrade pip==21.0.1 \
   && if [ "${mode}" = "server" ]; then pip install --upgrade -r  requirements_server.txt; fi
 
 
+WORKDIR /opt
 ENV PYTHONPATH "${PYTHONPATH}:/opt"
 
 COPY emoji_writer ./emoji_writer
