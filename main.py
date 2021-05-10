@@ -30,6 +30,7 @@ def cli():
 @click.option("--border-emoji", default="fire")
 @click.option("--border-size", type=int, default=1)
 @click.option("-rbo", "--random-border", default=False, is_flag=True)
+@click.option("--vertical/-v", default=False, is_flag=True)
 @click.option("--emojize/--no-emojize", default=True)
 def write(
     word: str,
@@ -44,6 +45,7 @@ def write(
     border_size: int,
     random_border: bool,
     emojize: bool,
+    vertical: bool,
 ) -> None:
     """Emoji writter allows you to write words using emojis
 
@@ -67,6 +69,7 @@ def write(
             random_border=random_border,
             border_size=border_size,
             emojize=emojize,
+            vertical=vertical,
         )
     )
 

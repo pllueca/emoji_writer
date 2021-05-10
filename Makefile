@@ -4,7 +4,7 @@ mkfile_dir := $(dir $(mkfile_path))
 build:
 	docker build . --tag emoji_writer:writer
 build_debug:
-	docker build . --tag emoji_writer --build-arg debug=true
+	docker build . --tag emoji_writer:writer --build-arg debug=true
 
 build_server: 
 	docker build . --tag emoji_writer:server --build-arg mode=server
@@ -20,13 +20,13 @@ runserver: build_server
 
 
 itest: build_debug
-	docker run --rm -it emoji_writer pytest test -s -v
+	docker run --rm -it emoji_writer:writer pytest test -s -v
 
 ipy: build
-	docker run --rm -it emoji_writer python
+	docker run --rm -it emoji_writer:writer python
 
 bash: build
-	docker run --rm -it emoji_writer bash
+	docker run --rm -it emoji_writer:writer bash
 
 fmt:
 	black .

@@ -2,6 +2,7 @@
 write works in 7x5 grids, with emojis
 """
 import random
+import string
 import sys
 from typing import Dict, List, Optional, Tuple
 
@@ -9,6 +10,14 @@ import emoji
 
 from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names
 from .letters import EMPTY_LETTER, letters_to_matrix
+
+# letters are drawn in a 5x7 matrix
+LETTER_WIDTH: int = 5
+LETTER_HEIGHT: int = 7
+
+BG_CHAR: str = "0"
+FG_CHAR: str = "1"
+BORDER_CHAR: str = "2"
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "short") -> str:
@@ -34,11 +43,112 @@ def write_word(
     emojize: bool = True,
     first_line: bool = True,
     last_line: bool = True,
+    vertical: bool = False,
+) -> str:
+    """Convert the word into emojis.
+    if first_line draw border on top
+    if last_line draw border on bottom
+    if vertical write 1 emoji per column
+    """
+    if vertical:
+        output_str = write_word_vertical(
+            word, foreground_emoji, background_emoji, border_emoji, border_size
+        )
+    else:
+        output_str = write_word_horizontal(
+            word,
+            foreground_emoji,
+            background_emoji,
+            border_emoji,
+            border_size,
+            first_line,
+            last_line,
+        )
+
+    output_str = output_str.translate(
+        str.maketrans(
+            {
+                "0": f":{background_emoji}:",
+                "1": f":{foreground_emoji}:",
+                "2": f":{border_emoji}:",
+            }
+        )
+    )
+    if emojize:
+        output_str = emoji.emojize(output_str, use_aliases=True)
+    return output_str
+
+
+def write_word_vertical(
+    word,
+    foreground_emoji: str,
+    background_emoji: str,
+    border_emoji: str = "",
+    border_size: int = 1,
+) -> str:
+    """ Draw a vertical word. EAch letter is in the same column """
+    text_width: int = LETTER_WIDTH + 2
+    if border_emoji:
+        text_width += 2 * border_size
+
+    output_lines: List[str] = []
+
+    def add_blank_line():
+        if border_emoji:
+            output_lines.append(
+                BORDER_CHAR * border_size
+                + BG_CHAR * (LETTER_WIDTH + 2)
+                + BORDER_CHAR * border_size
+            )
+        else:
+            output_lines.append("".join(BG_CHAR for _ in range(text_width)))
+
+    def add_border_line():
+        output_lines.append(BORDER_CHAR * text_width)
+
+    # write top border
+    if border_emoji:
+        for _ in range(border_size):
+            add_border_line()
+    add_blank_line()
+
+    # Write letters
+    # TODO: handle spaces and non letter characters
+    for letter in word:
+        current_letter_matrix = letters_to_matrix.get(letter.lower(), EMPTY_LETTER)
+        # for each row in the letter
+        for letter_line in current_letter_matrix:
+            # 0letter0
+            # line without the border
+            line = BG_CHAR + letter_line + BG_CHAR
+            if border_emoji:
+                line = BORDER_CHAR * border_size + line + BORDER_CHAR * border_size
+            output_lines.append(line)
+        add_blank_line()
+
+    # write bottom border
+    if border_emoji:
+        for _ in range(border_size):
+            add_border_line()
+
+    output_str: str = "\n".join(output_lines) + "\n"
+    return output_str
+
+
+def write_word_horizontal(
+    word,
+    foreground_emoji: str,
+    background_emoji: str,
+    border_emoji: str = "",
+    border_size: int = 1,
+    first_line: bool = True,
+    last_line: bool = True,
 ) -> str:
     """Convert the word into emojis.
     if first_line draw border on top
     if last_line draw border on bottom
     """
+
     # leave 1 empty column at the beggining
     output_lines = ["0" for i in range(7)]
 
@@ -84,20 +194,6 @@ def write_word(
                 # dont but \n at the end
                 if border_idx != border_size - 1:
                     output_str += "\n"
-
-    output_str = output_str.translate(
-        str.maketrans(
-            {
-                "0": f":{background_emoji}:",
-                "1": f":{foreground_emoji}:",
-                "2": f":{border_emoji}:",
-            }
-        )
-    )
-    if emojize:
-        return emoji.emojize(output_str, use_aliases=True)
-    else:
-        return output_str
     return output_str
 
 
@@ -117,6 +213,7 @@ def write_emoji_word(
     emoji_group_foreground: str = "short",
     emoji_group_background: str = "short",
     emoji_group_border: str = "short",
+    vertical: bool = False,
 ) -> str:
     """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
     if random_background:
@@ -140,8 +237,16 @@ def write_emoji_word(
     lines = word.split("\n")
     if len(lines) == 1:
         return write_word(
-            word, foreground, background, border_emoji, border_size, emojize=emojize
+            word,
+            foreground,
+            background,
+            border_emoji,
+            border_size,
+            emojize=emojize,
+            vertical=vertical,
         )
+    if vertical:
+        raise ValueError("Vertical output not supported for multiline inputs")
     # pad all lines up to longest line
     line_length = lambda l: sum([3 if c == " " else 5 for c in l])
     longest_line_length = max(line_length(l) for l in lines)
@@ -185,6 +290,7 @@ def default_emoji_params() -> Dict:
         "random_border": False,
         "border_size": 1,
         "emojize": True,
+        "vertical": False,
     }
 
 
@@ -229,6 +335,30 @@ def print_examples() -> None:
             border_size=0,
             random_border=False,
             emojize=True,
+        )
+    )
+    print()
+    print(
+        "python main.py write --word hello --foreground fire --background white_large_square"
+        " --border --border-emoji ATM_sign"
+        " --vertical"
+    )
+    # "white_large_square"# , "ATM_sign"
+    print(
+        write_emoji_word(
+            "hello",
+            foreground="fire",
+            random_foreground=False,
+            suggested_foreground=False,
+            background="white_large_square",
+            random_background=False,
+            suggested_background=False,
+            border=True,
+            border_emoji="ATM_sign",
+            border_size=1,
+            random_border=False,
+            emojize=True,
+            vertical=True,
         )
     )
 
