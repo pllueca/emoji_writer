@@ -28,6 +28,9 @@ ipy: build
 bash: build
 	docker run --rm -it emoji_writer:writer bash
 
+examples: build
+	docker run --rm emoji_writer:writer python main.py examples
+
 fmt:
 	black .
 	isort .
