@@ -23,4 +23,5 @@ ENV PYTHONPATH "${PYTHONPATH}:/opt"
 COPY emoji_writer ./emoji_writer
 COPY main.py main.py
 COPY app.py app.py
-COPY test ./test
+COPY test test
+COPY data data

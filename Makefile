@@ -23,7 +23,7 @@ itest: build_debug
 	docker run --rm -it emoji_writer:writer pytest test -s -v
 
 ipy: build
-	docker run --rm -it emoji_writer:writer python
+	docker run --rm -it emoji_writer:writer ipython
 
 bash: build
 	docker run --rm -it emoji_writer:writer bash

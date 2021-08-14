@@ -6,8 +6,6 @@ import string
 import sys
 from typing import Dict, List, Optional, Tuple
 
-import emoji
-
 from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names
 from .letters import EMPTY_LETTER, letters_to_matrix
 
