@@ -1,6 +1,6 @@
 """ Emoji writer logic """
 
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from .letters import EMPTY_LETTER, letters_to_matrix
 
@@ -27,6 +27,22 @@ class Writer:
         self.border_emoji: Optional[str] = border_emoji
         self.border_size: int = border_size
         self.vertical: bool = vertical
+
+    @property
+    def config(self) -> Dict:
+        cfg = {
+            "foreground": self.foreground_emoji,
+            "background": self.background_emoji,
+            "has_border": self.has_border,
+        }
+        if self.has_border:
+            cfg.update(
+                {
+                    "border_size": self.border_size,
+                    "border": self.border_emoji,
+                }
+            )
+        return cfg
 
     @property
     def has_border(self) -> bool:
