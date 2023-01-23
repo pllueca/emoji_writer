@@ -8,7 +8,7 @@ import emoji
 
 @cache
 def get_emoji_list_names(emoji_source: str) -> list:
-    """ get list of emoji name based on specified type """
+    """get list of emoji name based on specified type"""
     if emoji_source not in emoji_groups:
         raise KeyError(f"Unsupported emoji group {emoji_source}")
     return emoji_groups[emoji_source]
@@ -28,6 +28,15 @@ def get_emoji_dict() -> Dict[str, str]:
         name[1:-1]: label
         for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
     }
+
+
+def is_emoji(s: str) -> bool:
+    """return true if the passed string is an emoji. will return false if has
+    more characters:
+    '⏫' => True
+    'x: ⏫' => False
+    """
+    return s in emoji.UNICODE_EMOJI_ENGLISH
 
 
 # emojis representing a flag

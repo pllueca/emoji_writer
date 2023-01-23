@@ -8,7 +8,7 @@ from typing import Dict, List, Optional, Tuple
 
 import emoji
 
-from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names
+from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names, is_emoji
 from .letters import EMPTY_LETTER, letters_to_matrix
 
 # letters are drawn in a 5x7 matrix
@@ -21,7 +21,7 @@ BORDER_CHAR: str = "2"
 
 
 def overlapping_emoji_name(word: str, emoji_source: str = "short") -> str:
-    """ return an emoji based on overlap with emojis. remove the leading and training :"""
+    """return an emoji based on overlap with emojis. remove the leading and training :"""
     emoji_names = get_emoji_list_names(emoji_source)
     overlapping_names = [x.strip() for x in emoji_names if word in x]
     if len(overlapping_names) == 0:
@@ -30,7 +30,7 @@ def overlapping_emoji_name(word: str, emoji_source: str = "short") -> str:
 
 
 def random_emoji_name(emoji_source: str = "short") -> str:
-    """ return a random emoji. remove the leading and training :"""
+    """return a random emoji. remove the leading and training :"""
     return random.choice(get_emoji_list_names(emoji_source))[1:-1]
 
 
@@ -50,16 +50,38 @@ def write_word(
     if last_line draw border on bottom
     if vertical write 1 emoji per column
     """
+
+    use_border = border_emoji != "" and border_size > 0
+
+    if not is_emoji(foreground_emoji):
+        foreground_emoji = emoji.emojize(f":{foreground_emoji}:")
+
+    if not is_emoji(background_emoji):
+        background_emoji = emoji.emojize(f":{background_emoji}:")
+
+    if not is_emoji(border_emoji):
+        border_emoji = emoji.emojize(f":{border_emoji}:")
+
+    if not emojize:
+        background_emoji = emoji.UNICODE_EMOJI_ENGLISH[background_emoji]
+        foreground_emoji = emoji.UNICODE_EMOJI_ENGLISH[foreground_emoji]
+        try:
+            border_emoji = emoji.UNICODE_EMOJI_ENGLISH[border_emoji]
+        except KeyError:
+            # if not using border is fine to error here
+            if use_border:
+                raise
+
     if vertical:
         output_str = write_word_vertical(
-            word, foreground_emoji, background_emoji, border_emoji, border_size
+            word,
+            use_border,
+            border_size,
         )
     else:
         output_str = write_word_horizontal(
             word,
-            foreground_emoji,
-            background_emoji,
-            border_emoji,
+            use_border,
             border_size,
             first_line,
             last_line,
@@ -68,33 +90,29 @@ def write_word(
     output_str = output_str.translate(
         str.maketrans(
             {
-                "0": f":{background_emoji}:",
-                "1": f":{foreground_emoji}:",
-                "2": f":{border_emoji}:",
+                "0": background_emoji,
+                "1": foreground_emoji,
+                "2": border_emoji,
             }
         )
     )
-    if emojize:
-        output_str = emoji.emojize(output_str, use_aliases=True)
     return output_str
 
 
 def write_word_vertical(
     word,
-    foreground_emoji: str,
-    background_emoji: str,
-    border_emoji: str = "",
+    use_border: bool,
     border_size: int = 1,
 ) -> str:
-    """ Draw a vertical word. EAch letter is in the same column """
+    """Draw a vertical word. EAch letter is in the same column"""
     text_width: int = LETTER_WIDTH + 2
-    if border_emoji:
+    if use_border:
         text_width += 2 * border_size
 
     output_lines: List[str] = []
 
     def add_blank_line():
-        if border_emoji:
+        if use_border:
             output_lines.append(
                 BORDER_CHAR * border_size
                 + BG_CHAR * (LETTER_WIDTH + 2)
@@ -107,7 +125,7 @@ def write_word_vertical(
         output_lines.append(BORDER_CHAR * text_width)
 
     # write top border
-    if border_emoji:
+    if use_border:
         for _ in range(border_size):
             add_border_line()
     add_blank_line()
@@ -121,13 +139,13 @@ def write_word_vertical(
             # 0letter0
             # line without the border
             line = BG_CHAR + letter_line + BG_CHAR
-            if border_emoji:
+            if use_border:
                 line = BORDER_CHAR * border_size + line + BORDER_CHAR * border_size
             output_lines.append(line)
         add_blank_line()
 
     # write bottom border
-    if border_emoji:
+    if use_border:
         for _ in range(border_size):
             add_border_line()
 
@@ -137,9 +155,7 @@ def write_word_vertical(
 
 def write_word_horizontal(
     word,
-    foreground_emoji: str,
-    background_emoji: str,
-    border_emoji: str = "",
+    use_border: bool,
     border_size: int = 1,
     first_line: bool = True,
     last_line: bool = True,
@@ -165,30 +181,30 @@ def write_word_horizontal(
     char_length = len(output_lines[0])
     output_str = ""
 
-    if border_emoji and first_line:
+    if use_border and first_line:
         for _ in range(border_size):
             output_str += "2" * (char_length + 2 * border_size) + "\n"
 
-    if border_emoji:
+    if use_border:
         output_str += "2" * border_size + "0" * char_length + "2" * border_size + "\n"
     else:
         output_str += "0" * char_length + "\n"
 
     for l in output_lines:
-        if border_emoji:
+        if use_border:
             output_str += ("2" * border_size) + l + ("2" * border_size) + "\n"
         else:
             output_str += l + "\n"
 
     if last_line:
-        if border_emoji:
+        if use_border:
             output_str += (
                 "2" * border_size + "0" * char_length + "2" * border_size + "\n"
             )
         else:
             output_str += "0" * char_length
 
-        if border_emoji:
+        if use_border:
             for border_idx in range(border_size):
                 output_str += "2" * (char_length + 2 * border_size)
                 # dont but \n at the end
@@ -215,7 +231,7 @@ def write_emoji_word(
     emoji_group_border: str = "short",
     vertical: bool = False,
 ) -> str:
-    """ Draw the given word using emojis. Each letter is a 5x7 emoji matrix. """
+    """Draw the given word using emojis. Each letter is a 5x7 emoji matrix."""
     if random_background:
         background = random_emoji_name(emoji_group_background)
 
@@ -277,16 +293,16 @@ def write_emoji_word(
 
 
 def default_emoji_params() -> Dict:
-    """ returns dictionary of the default parameters """
+    """returns dictionary of the default parameters"""
     return {
-        "foreground": "thumbs_up",
+        "foreground": "👍",  # thumbs_up
         "random_foreground": False,
         "suggested_foreground": False,
-        "background": "white_large_square",
+        "background": "⬜",
         "random_background": False,
         "suggested_background": False,
         "border": False,
-        "border_emoji": "fire",
+        "border_emoji": "🔥",
         "random_border": False,
         "border_size": 1,
         "emojize": True,
@@ -295,7 +311,7 @@ def default_emoji_params() -> Dict:
 
 
 def print_examples() -> None:
-    """ Print some examples to stdout """
+    """Print some examples to stdout"""
 
     print("Emoji writter allows you to write words using emojis")
     print()
@@ -364,7 +380,7 @@ def print_examples() -> None:
 
 
 def list_emojis(group: Optional[str] = None) -> None:
-    """ list the available emojis """
+    """list the available emojis"""
     all_emojis = get_emoji_dict()
     if group is not None:
         if group not in emoji_groups:
