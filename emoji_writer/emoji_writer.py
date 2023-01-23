@@ -8,7 +8,7 @@ from typing import Dict, List, Optional, Tuple
 
 import emoji
 
-from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names
+from .groups import emoji_groups, get_emoji_dict, get_emoji_list_names, is_emoji
 from .letters import EMPTY_LETTER, letters_to_matrix
 
 # letters are drawn in a 5x7 matrix
@@ -50,16 +50,38 @@ def write_word(
     if last_line draw border on bottom
     if vertical write 1 emoji per column
     """
+
+    use_border = border_emoji != "" and border_size > 0
+
+    if not is_emoji(foreground_emoji):
+        foreground_emoji = emoji.emojize(f":{foreground_emoji}:")
+
+    if not is_emoji(background_emoji):
+        background_emoji = emoji.emojize(f":{background_emoji}:")
+
+    if not is_emoji(border_emoji):
+        border_emoji = emoji.emojize(f":{border_emoji}:")
+
+    if not emojize:
+        background_emoji = emoji.UNICODE_EMOJI_ENGLISH[background_emoji]
+        foreground_emoji = emoji.UNICODE_EMOJI_ENGLISH[foreground_emoji]
+        try:
+            border_emoji = emoji.UNICODE_EMOJI_ENGLISH[border_emoji]
+        except KeyError:
+            # if not using border is fine to error here
+            if use_border:
+                raise
+
     if vertical:
         output_str = write_word_vertical(
             word,
-            border_emoji != "",
+            use_border,
             border_size,
         )
     else:
         output_str = write_word_horizontal(
             word,
-            border_emoji != "",
+            use_border,
             border_size,
             first_line,
             last_line,
@@ -68,14 +90,12 @@ def write_word(
     output_str = output_str.translate(
         str.maketrans(
             {
-                "0": f":{background_emoji}:",
-                "1": f":{foreground_emoji}:",
-                "2": f":{border_emoji}:",
+                "0": background_emoji,
+                "1": foreground_emoji,
+                "2": border_emoji,
             }
         )
     )
-    if emojize:
-        output_str = emoji.emojize(output_str, use_aliases=True)
     return output_str
 
 
@@ -275,14 +295,14 @@ def write_emoji_word(
 def default_emoji_params() -> Dict:
     """returns dictionary of the default parameters"""
     return {
-        "foreground": "thumbs_up",
+        "foreground": "👍",  # thumbs_up
         "random_foreground": False,
         "suggested_foreground": False,
-        "background": "white_large_square",
+        "background": "⬜",
         "random_background": False,
         "suggested_background": False,
         "border": False,
-        "border_emoji": "fire",
+        "border_emoji": "🔥",
         "random_border": False,
         "border_size": 1,
         "emojize": True,

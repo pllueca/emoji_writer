@@ -27,6 +27,28 @@ def test_write_word_defaults():
     ), f"write_emoji_word produced wrong result, expected: {expected}, got: {emoji_word}"
 
 
+def test_write_word_defaults():
+    default_params = default_emoji_params()
+    emoji_word = write_word(
+        "lgtm",
+        "👍",
+        "⬜",
+    )
+    expected = """\
+⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
+⬜👍⬜⬜⬜⬜⬜⬜👍👍👍⬜⬜👍👍👍👍👍⬜👍⬜⬜⬜👍⬜
+⬜👍⬜⬜⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍👍⬜👍👍⬜
+⬜👍⬜⬜⬜⬜⬜👍⬜⬜⬜⬜⬜⬜⬜👍⬜⬜⬜👍⬜👍⬜👍⬜
+⬜👍⬜⬜⬜⬜⬜👍⬜⬜⬜⬜⬜⬜⬜👍⬜⬜⬜👍⬜👍⬜👍⬜
+⬜👍⬜⬜⬜⬜⬜👍⬜⬜👍👍⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜
+⬜👍⬜⬜⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜
+⬜👍👍👍👍👍⬜⬜👍👍👍⬜⬜⬜⬜👍⬜⬜⬜👍⬜⬜⬜👍⬜
+⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜"""
+    assert (
+        emoji_word == expected
+    ), f"write_emoji_word produced wrong result, expected: {expected}, got: {emoji_word}"
+
+
 def test_write_word_defaults_with_boder():
     default_params = default_emoji_params()
     emoji_word = write_word(
@@ -216,7 +238,7 @@ def test_write_word_defaults_vertical_with_border():
 
 
 def test_print_examples():
-    """ test that it doesnt crash """
+    """test that it doesnt crash"""
     print_examples()
 
 
