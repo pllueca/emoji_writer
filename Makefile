@@ -6,17 +6,20 @@ build:
 build_debug:
 	docker build . --tag emoji_writer:writer --build-arg debug=true
 
-build_server: 
-	docker build . --tag emoji_writer:server --build-arg mode=server
 
 test: build
 	docker run --rm emoji_writer:writer pytest test
 
+buildserver: 
+	docker build . --tag emoji_writer:server -f Dockerfile.server
+
 # run development server. mounts app.py
 runserver: build_server
-	docker run -p 8000:8000 -v $(mkfile_dir)app.py:/opt/app.py --rm -it emoji_writer:server \
-		uvicorn app:app --reload --host 0.0.0.0
+	docker run -p 8000:8000 -v $(mkfile_dir)app.py:/opt/app.py --rm -it emoji_writer:server
 		
+pushserver:
+	docker tag emoji_writer:server registry.digitalocean.com/pllueca-web/plluecaweb:server-latest
+	docker push registry.digitalocean.com/pllueca-web/plluecaweb:server-latest
 
 
 itest: build_debug

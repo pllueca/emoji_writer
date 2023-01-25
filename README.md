@@ -76,7 +76,6 @@ If you are feeling lucky you can use random emojis (some of them are smaller and
 🏤🧜🏤🏤🏤🧜🏤🧜🏤🏤🏤🧜🏤🧜🏤🏤🏤🧜🏤🧜🧜🧜🧜🏤🏤🏤🧜🧜🧜🏤🏤🧜🏤🏤🏤🧜🏤
 🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤
 ```
-
 You can also let the program decide which emojis to use based on the input word!
 
 `python main.py write --word party --suggested-background --suggested-foreground`
@@ -86,6 +85,9 @@ You can also let the program decide which emojis to use based on the input word!
 🎉🥳🥳🥳🥳🎉🎉🎉🥳🥳🥳🎉🎉🥳🥳🥳🥳🎉🎉🥳🥳🥳🥳🥳🎉🥳🎉🎉🎉🥳🎉
 🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🎉🥳🎉🎉🎉🥳🎉🎉🎉🥳🎉🎉🎉🥳🎉
 🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🎉🥳🎉🎉🎉🥳🎉🎉🎉🎉🥳🎉🥳🎉🎉
+push:
+	docker tag plluecaweb:dev registry.digitalocean.com/pllueca-web/plluecaweb:latest
+	docker push registry.digitalocean.com/pllueca-web/plluecaweb:latest
 🎉🥳🥳🥳🥳🎉🎉🥳🥳🥳🥳🥳🎉🥳🥳🥳🥳🎉🎉🎉🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉
 🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉🥳🎉🥳🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉
 🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉🥳🎉🥳🎉🎉🥳🎉🎉🎉🎉🥳🎉🎉🎉🎉🎉🥳🎉🎉🎉
@@ -152,7 +154,7 @@ The file `app.py` implements an HTTP webserver with an endpoint to generate emoj
 Endpoints:
 
 * `GET /`
-* `GET /{word}`
+* `GET /{word}?OPTIONS`, e.g.: /lgtm?foreground=%F0%9F%92%85&background=%F0%9F%A6%AC`
 
 
 ## TODO
