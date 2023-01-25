@@ -13,7 +13,7 @@ jobs:
     - name: Install doctl 
       uses: digitalocean/action-doctl@v2
       with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN_2 }}
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Build the server Docker image
       run: make buildserver
     - name: Log in to DO Container Registry 
