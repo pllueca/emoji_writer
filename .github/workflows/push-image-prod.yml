@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build the server Docker image
-      run: make buildserver
     - name: Install doctl 
       uses: digitalocean/action-doctl@v2
       with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN_2 }}
+    - name: Build the server Docker image
+      run: make buildserver
     - name: Log in to DO Container Registry 
       run: doctl registry login --expiry-seconds 600
     - name: Push the image to the registry
