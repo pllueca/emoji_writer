@@ -1,9 +1,6 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
     branches:
       - '*'
@@ -14,6 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --tag emoji_writer
+      run: make build
     - name: Run the tests inside the container
-      run: docker run --rm emoji_writer pytest test
+      run: make test
