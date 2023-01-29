@@ -1,4 +1,5 @@
 # Emoji Writer
+Python package to write words using emojis
 
 ## Setup
 
@@ -11,7 +12,47 @@ to run the tests
 pytest test
 ```
 
+Also can use containerized:
+
+Build the container
+```
+make build
+```
+
+Run the test inside the container
+```
+make test
+```
+
 ## Usage (Python module)
+
+```python
+from emoji_writer write_emoji_word
+>>> print(write_emoji_word("hello", foreground="✅", background="👽"))
+👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽
+👽✅👽👽👽✅👽✅✅✅✅✅👽✅👽👽👽👽👽✅👽👽👽👽👽👽✅✅✅👽👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅✅✅✅✅👽✅✅✅✅👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅✅✅✅✅👽✅✅✅✅✅👽✅✅✅✅✅👽👽✅✅✅👽👽
+👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽
+
+>>> print(write_emoji_word("hello", foreground="alien", background="thumbs_up"))
+👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍
+👍👽👍👍👍👽👍👽👽👽👽👽👍👽👍👍👍👍👍👽👍👍👍👍👍👍👽👽👽👍👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👽👽👽👽👍👽👽👽👽👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👽👽👽👽👍👽👽👽👽👽👍👽👽👽👽👽👍👍👽👽👽👍👍
+👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍
+```
+
+## Usage (Scripts)
+
 
 `python main.py write --word hello --foreground 👽 --background 🤤`
 

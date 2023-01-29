@@ -5,6 +5,7 @@ setup(
     version="0.2dev",
     url="https://github.com/Brinon/emoji_writer",
     author="Pablo Llueca",
+    author_email="pablo.llueca@gmail.com",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
