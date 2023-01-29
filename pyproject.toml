@@ -22,6 +22,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "click",
+    "emoji==1.2.0",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/Brinon/emoji_writer"

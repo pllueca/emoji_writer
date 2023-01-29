@@ -18,6 +18,6 @@ RUN pip install --upgrade pip \
 WORKDIR /opt
 ENV PYTHONPATH "${PYTHONPATH}:/opt"
 
-COPY src/emoji_writer ./emoji_writer
+COPY emoji_writer ./emoji_writer
 COPY scripts/main.py main.py
 COPY test ./test

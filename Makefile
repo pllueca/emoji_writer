@@ -35,6 +35,13 @@ examples: build
 	docker run --rm emoji_writer:writer python main.py examples
 
 fmt:
-	black src/ scripts/
-	isort src/ 
+	black emoji_writer/ scripts/
+	isort emoji_writer/ 
+
+buildpkg:
+	python3 -m build
+
+testpkg:
+	docker build -f dockerfiles/Dockerfile.test_package --tag emoji_writer:pkg-test .
+	docker run --rm emoji_writer:pkg-test
 

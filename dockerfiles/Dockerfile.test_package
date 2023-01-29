@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+RUN pip install --upgrade pip && pip install emoji_writer==0.0.2
+
+# to test local package
+#COPY dist/*.whl .
+#RUN pip install --force-reinstall *.whl
+
+CMD python -c 'from emoji_writer import write_emoji_word; print(write_emoji_word("hello", foreground="✅", background="👽"))'

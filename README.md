@@ -1,14 +1,22 @@
 # Emoji Writer
 Python package to write words using emojis
 
-## Setup
+## Instalation
+`emoji_writer` can be installed from pip:
 
+```
+pip install emoji_writer==0.0.2
+```
+
+or cloned from github:
+```
+git clone
+https://github.com/pllueca/emoji_writer
+```
+
+to install and run the tests locally
 ```
 pip install -r requirements.txt
-```
-
-to run the tests
-```
 pytest test
 ```
 
@@ -26,7 +34,7 @@ make test
 
 To build the python package:
 ```
- python3 -m build
+make buildpkg
 ```
 
 ## Usage (Python module)
