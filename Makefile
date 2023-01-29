@@ -41,6 +41,9 @@ fmt:
 buildpkg:
 	python3 -m build
 
+pushpkg: buildpkg
+	twine upload dist/*
+
 testpkg:
 	docker build -f dockerfiles/Dockerfile.test_package --tag emoji_writer:pkg-test .
 	docker run --rm emoji_writer:pkg-test

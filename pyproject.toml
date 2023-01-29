@@ -1,7 +1,7 @@
 
 [project]
 name = "emoji_writer"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Pablo Llueca", email="pablo.llueca@gmail.com" },
 ]

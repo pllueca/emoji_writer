@@ -12,3 +12,5 @@ from .groups import (
     get_emoji_list_pairs,
 )
 from .writer import Writer
+
+__version__ = '0.0.3'

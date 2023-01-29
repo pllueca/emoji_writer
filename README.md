@@ -5,7 +5,7 @@ Python package to write words using emojis
 `emoji_writer` can be installed from pip:
 
 ```
-pip install emoji_writer==0.0.2
+pip install emoji_writer
 ```
 
 or cloned from github:
