@@ -24,11 +24,16 @@ Run the test inside the container
 make test
 ```
 
+To build the python package:
+```
+ python3 -m build
+```
+
 ## Usage (Python module)
 
 ```python
-from emoji_writer write_emoji_word
->>> print(write_emoji_word("hello", foreground="✅", background="👽"))
+from emoji_writer import write_emoji_word
+print(write_emoji_word("hello", foreground="✅", background="👽"))
 👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽
 👽✅👽👽👽✅👽✅✅✅✅✅👽✅👽👽👽👽👽✅👽👽👽👽👽👽✅✅✅👽👽
 👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽

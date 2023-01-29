@@ -1,0 +1,28 @@
+FROM python:3.11-slim
+
+ARG debug
+ARG mode="writer"
+
+RUN echo $debug
+RUN apt update
+
+WORKDIR /pip
+COPY requirements.txt .
+COPY requirements_server.txt .
+
+RUN pip install --upgrade pip \
+  && pip install -r requirements.txt \
+  && pip install --upgrade -r  requirements_server.txt \
+  && rm requirements.txt \
+  && rm requirements_server.txt
+
+
+WORKDIR /opt
+ENV PYTHONPATH "${PYTHONPATH}:/opt"
+
+COPY src/emoji_writer ./emoji_writer
+COPY scripts/app.py app.py
+COPY test ./test
+
+CMD ["uvicorn", "app:app", "--reload", "--host", "0.0.0.0"]
+
