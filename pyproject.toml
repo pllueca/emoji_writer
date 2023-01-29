@@ -1,6 +1,6 @@
 
 [project]
-name = "EmojiWriter"
+name = "emoji_writer"
 version = "0.0.2"
 authors = [
   { name="Pablo Llueca", email="pablo.llueca@gmail.com" },

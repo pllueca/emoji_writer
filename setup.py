@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name="EmojiWriter",
+    name="emoji_writer",
     version="0.2dev",
     url="https://github.com/Brinon/emoji_writer",
     author="Pablo Llueca",
