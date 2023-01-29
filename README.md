@@ -202,15 +202,6 @@ outputs
 
 You can print all the examples running `python main.py examples`
 
-## Usage (server)
-The file `app.py` implements an HTTP webserver with an endpoint to generate emoji words. It can be ran with `make runserver`. It runs inside a docker container that exposes port 8000.
-
-Endpoints:
-
-* `GET /`
-* `GET /{word}?OPTIONS`, e.g.: /lgtm?foreground=%F0%9F%92%85&background=%F0%9F%A6%AC`
-
-
 ## TODO
 Features that would be nice to implement:
 
