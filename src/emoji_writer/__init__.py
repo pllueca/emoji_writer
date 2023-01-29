@@ -11,5 +11,4 @@ from .groups import (
     get_emoji_list_names,
     get_emoji_list_pairs,
 )
-
 from .writer import Writer

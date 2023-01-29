@@ -2,12 +2,17 @@ from distutils.core import setup
 
 setup(
     name="EmojiWriter",
-    version="0.1dev",
+    version="0.2dev",
     url="https://github.com/Brinon/emoji_writer",
     author="Pablo Llueca",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     packages=[
         "emoji_writer",
