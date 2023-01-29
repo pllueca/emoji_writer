@@ -1,0 +1,35 @@
+
+[project]
+name = "emoji_writer"
+version = "0.0.2"
+authors = [
+  { name="Pablo Llueca", email="pablo.llueca@gmail.com" },
+]
+description = "Tool to write words with emojis"
+license = {file = "LICENSE.md"}
+
+
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "click",
+    "emoji==1.2.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Brinon/emoji_writer"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

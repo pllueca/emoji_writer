@@ -77,13 +77,13 @@ def write(
 @cli.command()
 @click.argument("group", required=False)
 def list(group: Optional[str] = None):
-    """ Prints a list of the available emojis """
+    """Prints a list of the available emojis"""
     list_emojis(group)
 
 
 @cli.command()
 def examples():
-    """ print some examples """
+    """print some examples"""
     print_examples()
 
 

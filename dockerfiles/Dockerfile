@@ -19,5 +19,5 @@ WORKDIR /opt
 ENV PYTHONPATH "${PYTHONPATH}:/opt"
 
 COPY emoji_writer ./emoji_writer
-COPY main.py main.py
+COPY scripts/main.py main.py
 COPY test ./test

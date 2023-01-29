@@ -1,17 +1,71 @@
 # Emoji Writer
+Python package to write words using emojis
 
-## Setup
+## Instalation
+`emoji_writer` can be installed from pip:
 
+```
+pip install emoji_writer==0.0.2
+```
+
+or cloned from github:
+```
+git clone
+https://github.com/pllueca/emoji_writer
+```
+
+to install and run the tests locally
 ```
 pip install -r requirements.txt
-```
-
-to run the tests
-```
 pytest test
 ```
 
+Also can use containerized:
+
+Build the container
+```
+make build
+```
+
+Run the test inside the container
+```
+make test
+```
+
+To build the python package:
+```
+make buildpkg
+```
+
 ## Usage (Python module)
+
+```python
+from emoji_writer import write_emoji_word
+print(write_emoji_word("hello", foreground="✅", background="👽"))
+👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽
+👽✅👽👽👽✅👽✅✅✅✅✅👽✅👽👽👽👽👽✅👽👽👽👽👽👽✅✅✅👽👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅✅✅✅✅👽✅✅✅✅👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽👽👽✅👽👽👽✅👽
+👽✅👽👽👽✅👽✅✅✅✅✅👽✅✅✅✅✅👽✅✅✅✅✅👽👽✅✅✅👽👽
+👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽
+
+>>> print(write_emoji_word("hello", foreground="alien", background="thumbs_up"))
+👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍
+👍👽👍👍👍👽👍👽👽👽👽👽👍👽👍👍👍👍👍👽👍👍👍👍👍👍👽👽👽👍👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👽👽👽👽👍👽👽👽👽👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👍👍👽👍👍👍👽👍
+👍👽👍👍👍👽👍👽👽👽👽👽👍👽👽👽👽👽👍👽👽👽👽👽👍👍👽👽👽👍👍
+👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍
+```
+
+## Usage (Scripts)
+
 
 `python main.py write --word hello --foreground 👽 --background 🤤`
 

@@ -1,6 +1,6 @@
 """ Emoji writer logic """
 
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 from .letters import EMPTY_LETTER, letters_to_matrix
 

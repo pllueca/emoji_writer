@@ -21,7 +21,7 @@ WORKDIR /opt
 ENV PYTHONPATH "${PYTHONPATH}:/opt"
 
 COPY emoji_writer ./emoji_writer
-COPY app.py app.py
+COPY scripts/app.py app.py
 COPY test ./test
 
 CMD ["uvicorn", "app:app", "--reload", "--host", "0.0.0.0"]
