@@ -337,6 +337,7 @@ letters_to_matrix = {
     "n": N,
     "o": O,
     "p": P,
+    "q": Q,
     "r": R,
     "s": S,
     "t": T,
