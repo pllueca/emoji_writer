@@ -1,7 +1,7 @@
 
 [project]
 name = "emoji_writer"
-version = "0.0.4"
+version = "0.1.0"
 authors = [
   { name="Pablo Llueca", email="pablo.llueca@gmail.com" },
 ]
@@ -24,11 +24,11 @@ classifiers = [
 ]
 dependencies = [
     "click",
-    "emoji==1.2.0",
+    "emoji==2.2.0",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Brinon/emoji_writer"
+"Homepage" = "https://github.com/pllueca/emoji_writer"
 
 [build-system]
 requires = ["setuptools>=61.0"]

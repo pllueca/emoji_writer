@@ -16,18 +16,12 @@ def get_emoji_list_names(emoji_source: str) -> list:
 
 @cache
 def get_emoji_list_pairs() -> List[Tuple[str, str]]:
-    return [
-        (name[1:-1], label)
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
-    ]
+    return [(name[1:-1], label) for name, label in emoji.get_emoji_unicode_dict("en").items()]
 
 
 @cache
 def get_emoji_dict() -> Dict[str, str]:
-    return {
-        name[1:-1]: label
-        for name, label in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items()
-    }
+    return {name[1:-1]: label for name, label in emoji.get_emoji_unicode_dict("en").items()}
 
 
 def is_emoji(s: str) -> bool:
@@ -36,7 +30,7 @@ def is_emoji(s: str) -> bool:
     '⏫' => True
     'x: ⏫' => False
     """
-    return s in emoji.UNICODE_EMOJI_ENGLISH
+    return s in emoji.get_emoji_unicode_dict("en").values()
 
 
 # emojis representing a flag
@@ -301,20 +295,14 @@ FLAGS = [
 ]
 
 FACES = []
-all_emojis = list(emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.keys())
+all_emojis = list(emoji.get_emoji_unicode_dict("en").keys())
 
-short_emojis = [
-    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) == 1
-]
+short_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) == 1]
 
 
-medium_emojis = [
-    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) == 2
-]
+medium_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) == 2]
 
-long_emojis = [
-    k for k, v in emoji.unicode_codes.EMOJI_ALIAS_UNICODE_ENGLISH.items() if len(v) >= 2
-]
+long_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) >= 2]
 
 
 SLACK_EMOJIS_FILENAME = "./slack_emoji_list.txt"
