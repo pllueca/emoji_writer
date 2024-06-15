@@ -1,10 +1,8 @@
 """ Python emoji writter.
 write works in 7x5 grids, with emojis
 """
+
 import random
-import string
-import sys
-from typing import Dict, List, Optional, Tuple
 
 import emoji
 
@@ -109,7 +107,7 @@ def write_word_vertical(
     if use_border:
         text_width += 2 * border_size
 
-    output_lines: List[str] = []
+    output_lines: list[str] = []
 
     def add_blank_line():
         if use_border:
@@ -215,14 +213,14 @@ def write_word_horizontal(
 
 def write_emoji_word(
     word: str,
-    foreground: Optional[str] = None,
+    foreground: str | None = None,
     random_foreground: bool = False,
-    suggested_foreground: Optional[bool] = None,
-    background: Optional[str] = None,
+    suggested_foreground: str | None = None,
+    background: str | None = None,
     random_background: bool = False,
     suggested_background: bool = False,
     border: bool = False,
-    border_emoji: Optional[str] = None,
+    border_emoji: str | None = None,
     border_size: int = 1,
     random_border: bool = False,
     emojize: bool = True,
@@ -292,7 +290,7 @@ def write_emoji_word(
     return output_word
 
 
-def default_emoji_params() -> Dict:
+def default_emoji_params() -> dict:
     """returns dictionary of the default parameters"""
     return {
         "foreground": "👍",  # thumbs_up
@@ -379,7 +377,7 @@ def print_examples() -> None:
     )
 
 
-def list_emojis(group: Optional[str] = None) -> None:
+def list_emojis(group: str | None = None) -> None:
     """list the available emojis"""
     all_emojis = get_emoji_dict()
     if group is not None:

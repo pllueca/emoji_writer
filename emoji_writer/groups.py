@@ -1,7 +1,7 @@
 """ Groups of emojis """
+
 import os
 from functools import cache
-from typing import Dict, List, Tuple
 
 import emoji
 
@@ -15,13 +15,18 @@ def get_emoji_list_names(emoji_source: str) -> list:
 
 
 @cache
-def get_emoji_list_pairs() -> List[Tuple[str, str]]:
-    return [(name[1:-1], label) for name, label in emoji.get_emoji_unicode_dict("en").items()]
+def get_emoji_list_pairs() -> list[tuple[str, str]]:
+    return [
+        (name[1:-1], label)
+        for name, label in emoji.get_emoji_unicode_dict("en").items()
+    ]
 
 
 @cache
-def get_emoji_dict() -> Dict[str, str]:
-    return {name[1:-1]: label for name, label in emoji.get_emoji_unicode_dict("en").items()}
+def get_emoji_dict() -> dict[str, str]:
+    return {
+        name[1:-1]: label for name, label in emoji.get_emoji_unicode_dict("en").items()
+    }
 
 
 def is_emoji(s: str) -> bool:
@@ -300,7 +305,9 @@ all_emojis = list(emoji.get_emoji_unicode_dict("en").keys())
 short_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) == 1]
 
 
-medium_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) == 2]
+medium_emojis = [
+    k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) == 2
+]
 
 long_emojis = [k for k, v in emoji.get_emoji_unicode_dict("en").items() if len(v) >= 2]
 
@@ -312,7 +319,7 @@ if os.path.isfile(SLACK_EMOJIS_FILENAME):
     with open(SLACK_EMOJIS_FILENAME, "r") as f:
         slack_emojis = [f.read().splitlines()]
 
-emoji_groups: Dict[str, List[str]] = {
+emoji_groups: dict[str, list[str]] = {
     "flags": FLAGS,
     "short": short_emojis,
     "medium": medium_emojis,

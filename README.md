@@ -67,7 +67,7 @@ print(write_emoji_word("hello", foreground="✅", background="👽"))
 ## Usage (Scripts)
 
 
-`python main.py write --word hello --foreground 👽 --background 🤤`
+`python scripts/main.py write --word hello --foreground 👽 --background 🤤`
 
 ```
 🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤
@@ -81,7 +81,8 @@ print(write_emoji_word("hello", foreground="✅", background="👽"))
 🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤🤤
 ```
 
-`python main.py write --word hello --foreground alien --background bright_button`
+`python scripts/main.py write --word hello --foreground alien --background bright_button`
+
 
 ```
 🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆
@@ -97,7 +98,7 @@ print(write_emoji_word("hello", foreground="✅", background="👽"))
 
 Also supports and optional border:
 
-`python main.py write --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
+`python scripts/main.py write --word LGTM! --foreground brain --background "blue_circle" --border --border-size 2`
 
 ```
 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -117,7 +118,7 @@ Also supports and optional border:
 
 If you are feeling lucky you can use random emojis (some of them are smaller and it breaks the shapes):
 
-`python main.py write --word "random" --random-foreground --random-background`
+`python scripts/main.py write --word "random" --random-foreground --random-background`
 
 ```
 🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤🏤
@@ -132,7 +133,7 @@ If you are feeling lucky you can use random emojis (some of them are smaller and
 ```
 You can also let the program decide which emojis to use based on the input word!
 
-`python main.py write --word party --suggested-background --suggested-foreground`
+`python scripts/main.py write --word party --suggested-background --suggested-foreground`
 
 ```
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉
@@ -148,7 +149,7 @@ You can also let the program decide which emojis to use based on the input word!
 
 Letters can also be written in vertical:
 
-`python main.py write --word hello --foreground fire --background white_large_square --border --border-emoji ATM_sign --vertical`
+`python scripts/main.py write --word hello --foreground fire --background white_large_square --border --border-emoji ATM_sign --vertical`
 
 outputs
 ```
@@ -197,7 +198,7 @@ outputs
 🏧🏧🏧🏧🏧🏧🏧🏧🏧
 ```
 
-You can print all the examples running `python main.py examples`
+You can print all the examples running `python scripts/main.py examples`
 
 ## TODO
 Features that would be nice to implement:

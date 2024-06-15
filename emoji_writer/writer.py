@@ -1,12 +1,9 @@
 """ Emoji writer logic """
 
-from typing import Dict, List, Optional
-
 from .letters import EMPTY_LETTER, letters_to_matrix
 
 
 class Writer:
-
     LETTER_HEIGHT: int = 7  # size of the letters.
     TOP_PADDING: int = 1  # space between the top border and letters
     BOTTOM_PADDING: int = 1  # space between the bottom border and letters
@@ -18,18 +15,18 @@ class Writer:
         self,
         foreground_emoji: str,
         background_emoji: str,
-        border_emoji: Optional[str] = None,
+        border_emoji: str | None = None,
         border_size: int = 1,
         vertical: bool = False,
     ):
         self.foreground_emoji: str = foreground_emoji
         self.background_emoji: str = background_emoji
-        self.border_emoji: Optional[str] = border_emoji
+        self.border_emoji: str | None = border_emoji
         self.border_size: int = border_size
         self.vertical: bool = vertical
 
     @property
-    def config(self) -> Dict:
+    def config(self) -> dict:
         cfg = {
             "foreground": self.foreground_emoji,
             "background": self.background_emoji,
@@ -70,7 +67,7 @@ class Writer:
             if last_line:
                 height += self.border_size
 
-        output_lines = ["" for i in range(height)]
+        output_lines = ["" for _ in range(height)]
         # draw intial space and border
         if self.has_border:
             for _ in range(self.border_size):

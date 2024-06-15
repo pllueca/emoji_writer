@@ -50,7 +50,6 @@ def test_default_with_border():
 
 
 def test_thick_border():
-
     background = "👍"
     foreground = "⬜"
     border = "👽"
